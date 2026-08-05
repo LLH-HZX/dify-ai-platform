@@ -68,6 +68,48 @@ async def test_connection(base_url: str, api_key: str) -> dict:
         raise RAGFlowAPIError(f"无法连接 RAGFlow: {e}; datasets 接口: {err}", 502)
 
 
+async def list_documents(base_url: str, api_key: str, dataset_id: str) -> list[dict]:
+    """拉取某个数据集（知识库）下的文档列表，返回 [{id, name}]。
+
+    调用 GET {base_url}/api/v1/datasets/{dataset_id}/documents，
+    只取文档 id 与名称，供工作流表单做「文件级」勾选。
+    """
+    base_url = (base_url or "").rstrip("/")
+    if not base_url or not api_key:
+        raise RAGFlowAPIError("RAGFlow 服务地址或 API Key 未配置", 400)
+    if not dataset_id:
+        raise RAGFlowAPIError("数据集 ID 不能为空", 400)
+
+    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+    try:
+        async with httpx.AsyncClient(timeout=RAGFLOW_TIMEOUT, verify=False) as client:
+            resp = await client.get(
+                f"{base_url}/api/v1/datasets/{dataset_id}/documents",
+                headers=headers,
+                params={"page": 1, "page_size": 100},
+            )
+    except httpx.HTTPError as e:
+        raise RAGFlowAPIError(f"拉取文档列表失败: {e}", 502)
+
+    if resp.status_code != 200:
+        raise RAGFlowAPIError(_extract_error(resp), resp.status_code)
+
+    data = resp.json()
+    payload = data.get("data", []) if isinstance(data, dict) else data
+    # RAGFlow 文档列表接口返回 { "data": { "docs": [...], "total": N } }
+    # 兼容两种结构：data 为 list（部分版本）或 data 为 dict（含 docs 字段）
+    if isinstance(payload, dict):
+        items = payload.get("docs", [])
+    else:
+        items = payload if isinstance(payload, list) else []
+    documents = []
+    if isinstance(items, list):
+        for d in items:
+            if isinstance(d, dict):
+                documents.append({"id": d.get("id"), "name": d.get("name") or d.get("display_name")})
+    return documents
+
+
 async def retrieve(
     base_url: str,
     api_key: str,
@@ -75,10 +117,12 @@ async def retrieve(
     dataset_ids: list[str] | None = None,
     top_k: int = 3,
     similarity_threshold: float = 0.2,
+    document_ids: list[str] | None = None,
 ) -> list[dict]:
     """调用 RAGFlow 检索接口，返回文档片段列表。
 
     每个片段为 dict，含 content / score / document_name 等字段。
+    传入 document_ids 时按文档过滤，实现「只检索勾选的文件」。
     """
     base_url = (base_url or "").rstrip("/")
     if not base_url or not api_key:
@@ -91,6 +135,8 @@ async def retrieve(
         "top_k": int(top_k),
         "similarity_threshold": float(similarity_threshold),
     }
+    if document_ids:
+        body["document_ids"] = document_ids
 
     try:
         async with httpx.AsyncClient(timeout=RAGFLOW_TIMEOUT, verify=False) as client:

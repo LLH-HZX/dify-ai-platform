@@ -7,6 +7,30 @@
   {
     "username": "12345",
     "password": "$2b$12$XWy3vYCgEYbPiR4MSY7gL.55q/ovfZKNJHD5wZdjmgLDbTByMhpiG",
-    "role": "user"
+    "role": "user",
+    "allowed_workflow_ids": [
+      "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+      "0abcd926-274d-491f-a450-93471e80b0f5"
+    ]
+  },
+  {
+    "username": "2",
+    "password": "$2b$12$8l49HttScNvnti6bYYrKoOgj7V5Vyg/8jhpp4buCRd.pm1jXCpQYO",
+    "role": "user",
+    "allowed_workflow_ids": [
+      "0abcd926-274d-491f-a450-93471e80b0f5"
+    ]
+  },
+  {
+    "username": "001",
+    "password": "$2b$12$Z6cRJQywhRnL/SIgyMsaI.EQrwuAx5LRREK7NKeGB4QQe.XonP8EK",
+    "role": "admin",
+    "allowed_workflow_ids": []
+  },
+  {
+    "username": "002",
+    "password": "$2b$12$QdiOYeDk5Vqd4gWvZpZLRuJNDs7bFdNfN6jZ1L9bctBFf/wkCoxc2",
+    "role": "admin",
+    "allowed_workflow_ids": []
   }
 ]

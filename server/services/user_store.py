@@ -35,7 +35,11 @@ def list_users(include_password: bool = False) -> list[dict]:
         users = _read_all()
     results = []
     for u in users:
-        item = {"username": u.get("username", ""), "role": u.get("role", "user")}
+        item = {
+            "username": u.get("username", ""),
+            "role": u.get("role", "user"),
+            "allowed_workflow_ids": list(u.get("allowed_workflow_ids") or []),
+        }
         if include_password:
             item["password"] = u.get("password", "")
         results.append(item)
@@ -52,7 +56,8 @@ def get_user(username: str) -> Optional[dict]:
     return None
 
 
-def create_user(username: str, password_hash: str, role: str) -> dict:
+def create_user(username: str, password_hash: str, role: str,
+                allowed_workflow_ids: Optional[list] = None) -> dict:
     with _lock:
         users = _read_all()
         for u in users:
@@ -62,14 +67,19 @@ def create_user(username: str, password_hash: str, role: str) -> dict:
             "username": username,
             "password": password_hash,
             "role": role,
+            "allowed_workflow_ids": list(allowed_workflow_ids or []),
         }
         users.append(new_user)
         _write_all(users)
-    return {"username": username, "role": role}
+    return {
+        "username": username,
+        "role": role,
+        "allowed_workflow_ids": list(allowed_workflow_ids or []),
+    }
 
 
 def update_user(username: str, data: dict) -> Optional[dict]:
-    """更新账号（password_hash / role）。"""
+    """更新账号（password_hash / role / allowed_workflow_ids）。"""
     with _lock:
         users = _read_all()
         for i, u in enumerate(users):
@@ -78,9 +88,15 @@ def update_user(username: str, data: dict) -> Optional[dict]:
                     u["password"] = data["password"]
                 if "role" in data and data["role"]:
                     u["role"] = data["role"]
+                if "allowed_workflow_ids" in data and data["allowed_workflow_ids"] is not None:
+                    u["allowed_workflow_ids"] = list(data["allowed_workflow_ids"])
                 users[i] = u
                 _write_all(users)
-                return {"username": u["username"], "role": u["role"]}
+                return {
+                    "username": u["username"],
+                    "role": u["role"],
+                    "allowed_workflow_ids": list(u.get("allowed_workflow_ids") or []),
+                }
     return None
 
 
@@ -98,3 +114,18 @@ def count_by_role(role: str) -> int:
     with _lock:
         users = _read_all()
     return sum(1 for u in users if u.get("role") == role)
+
+
+def get_allowed_workflow_ids(username: str) -> set:
+    """获取某用户被授权的工作流 id 集合（admin 角色忽略，返回空集表示不受限）。"""
+    user = get_user(username)
+    if user is None:
+        return set()
+    return set(user.get("allowed_workflow_ids") or [])
+
+
+def user_has_workflow(username: str, role: str, workflow_id: str) -> bool:
+    """判断用户是否有权使用某工作流。admin 始终有权。"""
+    if role == "admin":
+        return True
+    return workflow_id in get_allowed_workflow_ids(username)

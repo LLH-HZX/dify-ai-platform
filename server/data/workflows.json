@@ -11,11 +11,21 @@
     "iframeUrl": "",
     "enabled": true,
     "ragEnabled": true,
-    "ragDatasetIds": [
-      "808648b08f0511f1a344c74ab4e31dc9"
-    ],
+    "ragDatasetIds": [],
     "ragTopK": 3,
-    "ragContextVar": "context"
+    "ragContextVar": "context",
+    "ragBindings": [
+      {
+        "baseId": "045c832a-087e-4bc6-be3e-80a685174de8",
+        "datasetId": "7feadae88fa911f1bee4dfe8fba56ff6",
+        "documentIds": []
+      },
+      {
+        "baseId": "045c832a-087e-4bc6-be3e-80a685174de8",
+        "datasetId": "808648b08f0511f1a344c74ab4e31dc9",
+        "documentIds": []
+      }
+    ]
   },
   {
     "id": "60113450-afc6-4959-8107-cf021f2eafff",

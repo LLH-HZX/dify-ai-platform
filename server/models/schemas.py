@@ -43,7 +43,8 @@ class WorkflowBase(BaseModel):
     enabled: bool = True
     # --- RAGFlow 检索相关 ---
     ragEnabled: bool = False        # 该工作流是否启用 RAGFlow 检索
-    ragDatasetIds: list = []        # 使用的 RAGFlow 数据集 ID 列表
+    ragDatasetIds: list = []        # 兼容旧数据：知识库实体 ID 列表（整库检索）
+    ragBindings: list = []          # 文件级绑定：[{baseId, datasetId, documentIds[]}]
     ragTopK: int = 3                # 检索返回片段数
     ragContextVar: str = "context"  # 注入 Dify 的 inputs 变量名
 
@@ -64,6 +65,7 @@ class WorkflowUpdate(BaseModel):
     enabled: Optional[bool] = None
     ragEnabled: Optional[bool] = None
     ragDatasetIds: Optional[list] = None
+    ragBindings: Optional[list] = None
     ragTopK: Optional[int] = None
     ragContextVar: Optional[str] = None
 
@@ -80,6 +82,7 @@ class WorkflowPublic(BaseModel):
     enabled: bool
     ragEnabled: bool = False
     ragDatasetIds: list = []
+    ragBindings: list = []          # 文件级绑定：[{baseId, datasetId, documentIds[]}]，用于前端回显
     ragTopK: int = 3
     ragContextVar: str = "context"
     # 不返回 apiKey
@@ -119,16 +122,19 @@ class AccountCreate(BaseModel):
     username: str = Field(..., min_length=1, max_length=64)
     password: str = Field(..., min_length=6, max_length=128)
     role: str = "user"  # admin | user
+    allowed_workflow_ids: list = []  # 允许使用的（普通用户）工作流 id 列表，admin 忽略
 
 
 class AccountUpdate(BaseModel):
     password: Optional[str] = None
     role: Optional[str] = None
+    allowed_workflow_ids: Optional[list] = None
 
 
 class AccountPublic(BaseModel):
     username: str
     role: str
+    allowed_workflow_ids: list = []
 
 
 # ═══════════════════════════════════════

@@ -53,20 +53,36 @@ var API_BASE = window.API_BASE || 'http://127.0.0.1:8100';
     createWorkflow: function (data) { return request('POST', '/api/workflows', data); },
     updateWorkflow: function (id, data) { return request('PUT', '/api/workflows/' + id, data); },
     deleteWorkflow: function (id) { return request('DELETE', '/api/workflows/' + id); },
+    listDatasets: function () { return request('GET', '/api/workflows/datasets'); },
 
     // 账号
     listAccounts: function () { return request('GET', '/api/accounts'); },
     createAccount: function (data) { return request('POST', '/api/accounts', data); },
+    updateAccount: function (username, data) { return request('PUT', '/api/accounts/' + username, data); },
     deleteAccount: function (username) { return request('DELETE', '/api/accounts/' + username); },
 
     // 后台统计
     getStats: function () { return request('GET', '/api/dashboard/stats'); },
     getRecent: function () { return request('GET', '/api/dashboard/recent?limit=50'); },
+    getAuditLogs: function () { return request('GET', '/api/dashboard/audit?limit=100'); },
 
-    // 知识库（RAGFlow 全局配置）
+    // 知识库（RAGFlow 全局配置，兼容旧接口）
     getKnowledgeConfig: function () { return request('GET', '/api/knowledge/config'); },
     saveKnowledgeConfig: function (data) { return request('PUT', '/api/knowledge/config', data); },
     testKnowledge: function (data) { return request('POST', '/api/knowledge/test', data); },
+    deleteDataset: function (dataset_id) { return request('DELETE', '/api/knowledge/datasets/' + encodeURIComponent(dataset_id)); },
+
+    // 知识库实体（多 RAGFlow 服务器，每条自带 url/key，有归属）
+    listKnowledgeBases: function () { return request('GET', '/api/knowledge-bases'); },
+    createKnowledgeBase: function (data) { return request('POST', '/api/knowledge-bases', data); },
+    updateKnowledgeBase: function (id, data) { return request('PUT', '/api/knowledge-bases/' + id, data); },
+    deleteKnowledgeBase: function (id) { return request('DELETE', '/api/knowledge-bases/' + id); },
+    // 知识库测试连接与文件级绑定所需
+    testKnowledgeBase: function (data) { return request('POST', '/api/knowledge-bases/test-connection', data); },
+    listBaseDatasets: function (id) { return request('GET', '/api/knowledge-bases/' + id + '/datasets'); },
+    listBaseDocuments: function (id, datasetId) {
+      return request('GET', '/api/knowledge-bases/' + id + '/datasets/' + encodeURIComponent(datasetId) + '/documents');
+    },
   };
 
   /**

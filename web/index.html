@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI应用平台</title>
   <meta name="description" content="企业内部 AI 应用门户" />
-  <link rel="stylesheet" href="css/style.css?v=4" />
+  <link rel="stylesheet" href="css/style.css?v=5" />
 </head>
 <body>
 
@@ -88,6 +88,7 @@
         <button class="admin-tab" data-tab="knowledge">知识库管理</button>
         <button class="admin-tab" data-tab="accounts">账号管理</button>
         <button class="admin-tab" data-tab="dashboard">数据概览</button>
+        <button class="admin-tab" data-tab="audit">操作日志</button>
       </nav>
 
       <!-- 工作流管理 -->
@@ -137,7 +138,12 @@
               <label class="field field-full field-check">
                 <input id="wf-ragenabled" type="checkbox" /> 启用 RAGFlow 检索（聊天前先检索知识库并注入上下文）
               </label>
-              <label class="field"><span class="field-label">数据集 ID（多个用逗号分隔）</span><input id="wf-ragdatasets" class="field-input" placeholder="如 ds_xxx, ds_yyy" /></label>
+              <div class="field field-full">
+                <span class="field-label">绑定知识库（点开知识库服务器 → 勾选要检索的知识库/数据集，可多选、跨服务器，勾选即整库检索）</span>
+                <div id="wf-ragdatasets-list" class="wf-check-list">
+                  <p class="empty-tip" style="font-size:0.85rem;" id="wf-ragdatasets-loading">加载知识库中...</p>
+                </div>
+              </div>
               <label class="field"><span class="field-label">检索片段数 TopK</span><input id="wf-ragtopk" class="field-input" type="number" min="1" max="10" value="3" /></label>
               <label class="field"><span class="field-label">注入 Dify 的变量名</span><input id="wf-ragcontextvar" class="field-input" value="context" /></label>
             </div>
@@ -151,28 +157,39 @@
 
       <!-- 知识库管理 -->
       <section id="tab-knowledge" class="admin-panel" hidden>
-        <div class="panel-head"><h3>RAGFlow 知识库配置</h3></div>
+        <div class="panel-head">
+          <h3>知识库列表</h3>
+          <button id="kb-add-btn" class="btn-primary btn-sm">＋ 添加知识库</button>
+        </div>
         <p style="color:#6B7280; font-size:0.9rem; margin-bottom:16px;">
-          配置 RAGFlow 服务地址与 API Key。配置并启用后，启用了“RAGFlow 检索”的工作流，会在聊天前自动检索知识库，把结果作为上下文注入 Dify。
+          每个知识库对应一个 RAGFlow 服务器（可各自不同的地址与 API Key），由添加它的管理员管理。所有管理员可见全部知识库；只有添加者可修改/删除。工作流可自由勾选任意知识库。
         </p>
-        <form id="kb-form" class="form-grid">
-          <label class="field field-full"><span class="field-label">RAGFlow 服务地址 baseUrl</span><input id="kb-baseurl" class="field-input" placeholder="如 http://127.0.0.1:9380" /></label>
-          <label class="field field-full"><span class="field-label">API Key（留空表示不修改）</span><input id="kb-apikey" class="field-input" type="password" placeholder="ragflow-xxx" /></label>
-          <label class="field field-full field-check">
-            <input id="kb-enabled" type="checkbox" /> 启用 RAGFlow（关闭则所有工作流都不再检索）
-          </label>
-          <div class="field field-full">
-            <div style="display:flex; gap:12px; align-items:center;">
-              <button type="button" id="kb-test-btn" class="btn-outline" style="color:#2563EB; border-color:#2563EB;">测试连接</button>
-              <button type="button" id="kb-save-btn" class="btn-primary">保存配置</button>
+        <table class="data-table">
+          <thead><tr><th>名称</th><th>RAGFlow 地址</th><th>归属</th><th>操作</th></tr></thead>
+          <tbody id="kb-table-body"></tbody>
+        </table>
+
+        <!-- 新增/编辑知识库表单 -->
+        <div id="kb-form-wrap" class="form-card" hidden>
+          <h3 id="kb-form-title">添加知识库</h3>
+          <form id="kb-form">
+            <input type="hidden" id="kb-id" />
+            <div class="form-grid">
+              <label class="field field-full"><span class="field-label">知识库名称 *</span><input id="kb-name" class="field-input" placeholder="如：我的知识库A" required /></label>
+              <label class="field field-full"><span class="field-label">RAGFlow 服务地址 baseUrl *</span><input id="kb-baseurl" class="field-input" placeholder="如 http://127.0.0.1:9380" required /></label>
+              <label class="field field-full"><span class="field-label">API Key *（编辑时留空表示不修改）</span><input id="kb-apikey" class="field-input" type="password" placeholder="ragflow-xxx" required /></label>
+              <div class="field field-full">
+                <span class="field-label">测试连接（验证地址与 Key，并查看该服务器下的数据集）</span>
+                <button type="button" id="kb-test-btn" class="btn-primary btn-sm">⚡ 测试连接</button>
+                <span id="kb-test-result" class="kb-test-result"></span>
+              </div>
             </div>
-          </div>
-          <div id="kb-test-status" class="kb-status"></div>
-          <label class="field field-full"><span class="field-label">可用数据集（测试成功后自动列出）</span>
-            <select id="kb-datasets" class="field-input" multiple size="6"></select>
-          </label>
-          <label class="field field-full"><span class="field-label">选择的数据集 ID（自动同步，也可手动填写）</span><input id="kb-dataset-ids" class="field-input" placeholder="ds_xxx, ds_yyy" /></label>
-        </form>
+            <div class="form-actions">
+              <button type="button" id="kb-form-cancel" class="btn-outline">取消</button>
+              <button type="submit" class="btn-primary">保存</button>
+            </div>
+          </form>
+        </div>
       </section>
 
       <!-- 账号管理 -->
@@ -183,23 +200,30 @@
         </div>
         <table class="data-table">
           <thead>
-            <tr><th>用户名</th><th>角色</th><th>操作</th></tr>
+            <tr><th>用户名</th><th>角色</th><th>已授权工作流</th><th>操作</th></tr>
           </thead>
           <tbody id="acc-table-body"></tbody>
         </table>
 
         <div id="acc-form-wrap" class="form-card" hidden>
-          <h3>添加账号</h3>
+          <h3 id="acc-form-title">添加账号</h3>
           <form id="acc-form">
             <div class="form-grid">
               <label class="field"><span class="field-label">用户名 *</span><input id="acc-username" class="field-input" required /></label>
-              <label class="field"><span class="field-label">密码 *</span><input id="acc-password" class="field-input" type="password" required minlength="6" /></label>
+              <label class="field"><span class="field-label" id="acc-password-label">密码 *</span><input id="acc-password" class="field-input" type="password" required minlength="6" /></label>
               <label class="field"><span class="field-label">角色 *</span>
                 <select id="acc-role" class="field-input">
                   <option value="user">普通用户</option>
                   <option value="admin">管理员</option>
                 </select>
               </label>
+              <div class="field field-full">
+                <span class="field-label" style="font-weight:700; color:#2563EB;">可用工作流权限</span>
+                <div id="acc-workflow-list" class="wf-check-list">
+                  <p class="empty-tip" style="font-size:0.85rem;">加载中...</p>
+                </div>
+                <p style="color:#6B7280; font-size:0.8rem; margin-top:4px;">勾选该用户可使用的（已启用）工作流。管理员角色不受此限制。</p>
+              </div>
             </div>
             <div class="form-actions">
               <button type="button" id="acc-form-cancel" class="btn-outline">取消</button>
@@ -221,6 +245,21 @@
         <table class="data-table">
           <thead><tr><th>时间</th><th>用户</th><th>工作流ID</th><th>问题</th></tr></thead>
           <tbody id="recent-table-body"></tbody>
+        </table>
+      </section>
+
+      <!-- 操作日志 -->
+      <section id="tab-audit" class="admin-panel" hidden>
+        <div class="panel-head">
+          <h3>操作日志</h3>
+          <button type="button" id="audit-refresh-btn" class="btn-outline btn-sm">刷新</button>
+        </div>
+        <p style="color:#6B7280; font-size:0.9rem; margin-bottom:16px;">
+          记录管理员在后台的配置操作（新增/修改/删除工作流、绑定知识库、账号管理、知识库配置等）。
+        </p>
+        <table class="data-table">
+          <thead><tr><th>时间</th><th>操作人</th><th>动作</th><th>详情</th></tr></thead>
+          <tbody id="audit-table-body"></tbody>
         </table>
       </section>
     </main>
@@ -250,11 +289,11 @@
   </div>
 
   <!-- 脚本：auth → api → apps → chat → admin → app -->
-  <script src="js/auth.js?v=3"></script>
-  <script src="js/api.js?v=4"></script>
-  <script src="js/apps.js?v=3"></script>
-  <script src="js/chat.js?v=3"></script>
-  <script src="js/admin.js?v=4"></script>
-  <script src="js/app.js?v=3"></script>
+  <script src="js/auth.js?v=4"></script>
+  <script src="js/api.js?v=5"></script>
+  <script src="js/apps.js?v=4"></script>
+  <script src="js/chat.js?v=4"></script>
+  <script src="js/admin.js?v=6"></script>
+  <script src="js/app.js?v=4"></script>
 </body>
 </html>

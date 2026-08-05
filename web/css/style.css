@@ -622,6 +622,150 @@ body {
 .field-check { flex-direction: row; align-items: center; gap: 8px; font-size: 0.9rem; color: #374151; }
 .form-error { color: #EF4444; font-size: 0.85rem; }
 
+/* ===== 账号工作流权限复选框 ===== */
+.wf-check-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  background: #F9FAFB;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.wf-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #374151;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+.wf-check:hover { background: #EEF2FF; }
+.wf-check input[type="checkbox"] { accent-color: #2563EB; width: 16px; height: 16px; cursor: pointer; }
+
+/* ===== 知识库数据集列表（管理页） ===== */
+.wf-check .dataset-name {
+  font-weight: 500;
+  color: #1F2937;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wf-check .dataset-id {
+  margin-left: auto;
+  color: #9CA3AF;
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+/* ===== 工作流表单：知识库→文件 两级勾选 ===== */
+#wf-ragdatasets-list.wf-check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 320px;
+}
+.kb-node {
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px 12px;
+}
+.kb-node-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1F2937;
+  user-select: none;
+}
+.kb-node-arrow {
+  display: inline-block;
+  transition: transform 0.18s ease;
+  color: #2563EB;
+  font-size: 0.75rem;
+}
+.kb-node.open .kb-node-arrow { transform: rotate(90deg); }
+.kb-node-body {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #E5E7EB;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.kb-node-body[hidden] { display: none; }
+.kb-dataset-select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  background: #F9FAFB;
+  color: #1F2937;
+  font-size: 0.85rem;
+}
+.kb-dataset-select:focus { outline: none; border-color: #3B82F6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+.kb-files {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.kb-dataset-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #374151;
+  cursor: pointer;
+  padding: 3px 4px;
+  border-radius: 6px;
+}
+.kb-dataset-check:hover { background: #EEF2FF; }
+.kb-dataset-check input[type="checkbox"] { accent-color: #2563EB; width: 15px; height: 15px; cursor: pointer; }
+.kb-file-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #374151;
+  cursor: pointer;
+  padding: 3px 4px;
+  border-radius: 6px;
+}
+.kb-file-check:hover { background: #EEF2FF; }
+.kb-file-check input[type="checkbox"] { accent-color: #2563EB; width: 15px; height: 15px; cursor: pointer; }
+.kb-node-empty {
+  font-size: 0.8rem;
+  color: #9CA3AF;
+  padding: 4px 0;
+}
+.kb-file-count {
+  font-size: 0.75rem;
+  color: #2563EB;
+  margin-left: auto;
+  font-weight: 500;
+}
+
+/* ===== 知识库表单测试连接 ===== */
+.kb-test-result {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.kb-test-result.ok { color: #10B981; }
+.kb-test-result.fail { color: #EF4444; }
+
 /* ===== 管理后台 Tabs ===== */
 .admin-header { padding: 32px 0 24px; }
 .admin-tabs {

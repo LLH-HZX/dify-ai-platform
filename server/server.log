@@ -1,0 +1,146 @@
+INFO:     Started server process [25712]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8100 (Press CTRL+C to quit)
+INFO:     127.0.0.1:64385 - "GET /health HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:64393 - "GET /api/knowledge-bases HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:64398 - "GET /api/knowledge-bases HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:64504 - "POST /api/knowledge-bases/test-connection HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:64505 - "GET /api/knowledge-bases/abc/datasets HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:64506 - "GET /api/knowledge-bases/abc/datasets/xyz/documents HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:64567 - "OPTIONS /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "OPTIONS /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "OPTIONS /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "OPTIONS /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "OPTIONS /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "OPTIONS /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "OPTIONS /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64567 - "GET /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64631 - "OPTIONS /api/knowledge-bases/test-connection HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets?page=1&page_size=20 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64631 - "POST /api/knowledge-bases/test-connection HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64632 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64632 - "GET /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64632 - "OPTIONS /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets?page=1&page_size=20 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64632 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64646 - "OPTIONS /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/808648b08f0511f1a344c74ab4e31dc9/documents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/808648b08f0511f1a344c74ab4e31dc9/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64646 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/808648b08f0511f1a344c74ab4e31dc9/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64646 - "OPTIONS /api/workflows/1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64646 - "PUT /api/workflows/1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64646 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64646 - "OPTIONS /api/dashboard/audit?limit=100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64646 - "GET /api/dashboard/audit?limit=100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64653 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64653 - "OPTIONS /api/workflows HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64653 - "GET /api/workflows HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64656 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64656 - "GET /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets?page=1&page_size=20 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64656 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/808648b08f0511f1a344c74ab4e31dc9/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64656 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/808648b08f0511f1a344c74ab4e31dc9/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64656 - "PUT /api/workflows/1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64656 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64656 - "GET /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64656 - "GET /api/workflows HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64674 - "OPTIONS /api/chat HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST http://172.20.45.95:9380/api/v1/retrieval "HTTP/1.1 200 "
+INFO:     127.0.0.1:64674 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://192.168.77.33:8443/v1/chat-messages "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://172.20.45.95:9380/api/v1/retrieval "HTTP/1.1 200 "
+INFO:     127.0.0.1:64675 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://192.168.77.33:8443/v1/chat-messages "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://172.20.45.95:9380/api/v1/retrieval "HTTP/1.1 200 "
+INFO:     127.0.0.1:64682 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://192.168.77.33:8443/v1/chat-messages "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:64686 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets?page=1&page_size=20 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64734 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64734 - "OPTIONS /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64734 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64734 - "OPTIONS /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/8f80dbe08ee811f1872edb8cd6612f87/documents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/8f80dbe08ee811f1872edb8cd6612f87/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64734 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/8f80dbe08ee811f1872edb8cd6612f87/documents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/808648b08f0511f1a344c74ab4e31dc9/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64734 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/808648b08f0511f1a344c74ab4e31dc9/documents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64734 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/8f80dbe08ee811f1872edb8cd6612f87/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64734 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/8f80dbe08ee811f1872edb8cd6612f87/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64734 - "PUT /api/workflows/1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64734 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64734 - "GET /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets?page=1&page_size=20 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64734 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/808648b08f0511f1a344c74ab4e31dc9/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:64734 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/808648b08f0511f1a344c74ab4e31dc9/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64734 - "PUT /api/workflows/1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64734 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64734 - "GET /api/workflows HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST http://172.20.45.95:9380/api/v1/retrieval "HTTP/1.1 200 "
+INFO:     127.0.0.1:64734 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://192.168.77.33:8443/v1/chat-messages "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:65193 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65193 - "GET /api/dashboard/audit?limit=100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "OPTIONS /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "OPTIONS /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "OPTIONS /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "GET /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "OPTIONS /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets?page=1&page_size=20 "HTTP/1.1 200 "
+INFO:     127.0.0.1:65519 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "OPTIONS /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:65519 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "OPTIONS /api/workflows/1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "PUT /api/workflows/1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "OPTIONS /api/dashboard/audit?limit=100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "GET /api/dashboard/audit?limit=100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "GET /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "GET /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "OPTIONS /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65519 - "GET /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49203 - "OPTIONS /api/knowledge-bases/test-connection HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets?page=1&page_size=20 "HTTP/1.1 200 "
+INFO:     127.0.0.1:49203 - "POST /api/knowledge-bases/test-connection HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets?page=1&page_size=20 "HTTP/1.1 200 "
+INFO:     127.0.0.1:49203 - "POST /api/knowledge-bases/test-connection HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49203 - "OPTIONS /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49203 - "PUT /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49203 - "GET /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49203 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49203 - "GET /api/knowledge-bases HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets?page=1&page_size=20 "HTTP/1.1 200 "
+INFO:     127.0.0.1:49203 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49203 - "OPTIONS /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/808648b08f0511f1a344c74ab4e31dc9/documents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/808648b08f0511f1a344c74ab4e31dc9/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:49203 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/808648b08f0511f1a344c74ab4e31dc9/documents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:49203 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49204 - "PUT /api/workflows/1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49204 - "GET /api/workflows/all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49204 - "GET /api/dashboard/audit?limit=100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49697 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:49706 - "POST /api/auth/login HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:49716 - "POST /api/auth/login HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:49736 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:49736 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50290 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://172.20.45.95:9380/api/v1/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents?page=1&page_size=100 "HTTP/1.1 200 "
+INFO:     127.0.0.1:50290 - "GET /api/knowledge-bases/045c832a-087e-4bc6-be3e-80a685174de8/datasets/7feadae88fa911f1bee4dfe8fba56ff6/documents HTTP/1.1" 200 OK

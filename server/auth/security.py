@@ -79,7 +79,7 @@ def _get_payload(credentials: Optional[HTTPAuthorizationCredentials]) -> dict:
 def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
 ) -> dict:
-    """返回当前登录用户：{"username": ..., "role": ...}"""
+    """返回当前登录用户：{"username", "role", "allowed_workflow_ids"}"""
     payload = _get_payload(credentials)
     username = payload.get("sub")
     if not username:
@@ -87,7 +87,11 @@ def get_current_user(
     user = get_user(username)
     if user is None:
         raise HTTPException(status_code=401, detail="用户不存在")
-    return {"username": user["username"], "role": user["role"]}
+    return {
+        "username": user["username"],
+        "role": user["role"],
+        "allowed_workflow_ids": list(user.get("allowed_workflow_ids") or []),
+    }
 
 
 def require_admin(

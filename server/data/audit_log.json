@@ -1,0 +1,116 @@
+[
+  {
+    "time": "2026-08-05 14:03:53",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，绑定数据集: ['7feadae88fa911f1bee4dfe8fba56ff6']"
+  },
+  {
+    "time": "2026-08-05 14:04:15",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，绑定数据集: ['7feadae88fa911f1bee4dfe8fba56ff6']"
+  },
+  {
+    "time": "2026-08-05 14:06:24",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，绑定数据集: ['7feadae88fa911f1bee4dfe8fba56ff6', '808648b08f0511f1a344c74ab4e31dc9']"
+  },
+  {
+    "time": "2026-08-05 14:06:30",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，绑定数据集: ['808648b08f0511f1a344c74ab4e31dc9']"
+  },
+  {
+    "time": "2026-08-05 14:10:43",
+    "username": "admin",
+    "action": "新增账号",
+    "detail": "账号「001」(角色=admin)，授权工作流: []"
+  },
+  {
+    "time": "2026-08-05 14:10:59",
+    "username": "admin",
+    "action": "新增账号",
+    "detail": "账号「002」(角色=admin)，授权工作流: []"
+  },
+  {
+    "time": "2026-08-05 14:35:55",
+    "username": "admin",
+    "action": "新增知识库",
+    "detail": "知识库「test」(id=045c832a-087e-4bc6-be3e-80a685174de8)"
+  },
+  {
+    "time": "2026-08-05 14:36:28",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，绑定数据集: ['045c832a-087e-4bc6-be3e-80a685174de8']"
+  },
+  {
+    "time": "2026-08-05 14:47:54",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，知识库绑定: 无"
+  },
+  {
+    "time": "2026-08-05 14:48:27",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，知识库绑定: 无"
+  },
+  {
+    "time": "2026-08-05 14:49:35",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，知识库绑定: 无"
+  },
+  {
+    "time": "2026-08-05 14:49:45",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，知识库绑定: 无"
+  },
+  {
+    "time": "2026-08-05 15:00:55",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，知识库绑定: 无"
+  },
+  {
+    "time": "2026-08-05 15:01:25",
+    "username": "admin",
+    "action": "修改知识库",
+    "detail": "知识库「test」(id=045c832a-087e-4bc6-be3e-80a685174de8)"
+  },
+  {
+    "time": "2026-08-05 15:01:54",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，知识库绑定: 无"
+  },
+  {
+    "time": "2026-08-05 15:19:48",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，知识库绑定: 知识库045c832a-087e-4bc6-be3e-80a685174de8/数据集7feadae88fa911f1bee4dfe8fba56ff6/文件[]"
+  },
+  {
+    "time": "2026-08-05 15:20:53",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，知识库绑定: 知识库045c832a-087e-4bc6-be3e-80a685174de8/数据集7feadae88fa911f1bee4dfe8fba56ff6/文件[]；知识库045c832a-087e-4bc6-be3e-80a685174de8/数据集808648b08f0511f1a344c74ab4e31dc9/文件[]"
+  },
+  {
+    "time": "2026-08-05 15:21:02",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，知识库绑定: 知识库045c832a-087e-4bc6-be3e-80a685174de8/数据集7feadae88fa911f1bee4dfe8fba56ff6/文件[]"
+  },
+  {
+    "time": "2026-08-05 15:21:38",
+    "username": "admin",
+    "action": "修改工作流",
+    "detail": "工作流「test」(id=1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd)，知识库绑定: 知识库045c832a-087e-4bc6-be3e-80a685174de8/数据集7feadae88fa911f1bee4dfe8fba56ff6/文件[]；知识库045c832a-087e-4bc6-be3e-80a685174de8/数据集808648b08f0511f1a344c74ab4e31dc9/文件[]"
+  }
+]

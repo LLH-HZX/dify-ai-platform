@@ -12,6 +12,8 @@ WORKFLOWS_JSON_PATH = DATA_DIR / "workflows.json"
 USERS_JSON_PATH = DATA_DIR / "users.json"
 CONVERSATIONS_JSON_PATH = DATA_DIR / "conversations.json"
 RAGFLOW_CONFIG_JSON_PATH = DATA_DIR / "ragflow_config.json"
+AUDIT_LOG_JSON_PATH = DATA_DIR / "audit_log.json"
+KNOWLEDGE_BASES_JSON_PATH = DATA_DIR / "knowledge_bases.json"
 
 # 确保目录存在
 DATA_DIR.mkdir(parents=True, exist_ok=True)

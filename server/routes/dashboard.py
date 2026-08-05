@@ -2,12 +2,13 @@
 后台统计路由（仅管理员）
   GET /api/dashboard/stats → 工作流数 / 用户数 / 管理员数 / 对话次数
   GET /api/dashboard/recent  → 最近对话记录
+  GET /api/dashboard/audit  → 操作日志
 """
 from fastapi import APIRouter, Depends
 
 from auth.security import require_admin
 from models.schemas import DashboardStats
-from services import workflow_store, user_store, conversation_store
+from services import workflow_store, user_store, conversation_store, audit_log
 
 router = APIRouter(prefix="/api/dashboard", tags=["Dashboard"])
 
@@ -25,3 +26,8 @@ def stats(_: dict = Depends(require_admin)):
 @router.get("/recent")
 def recent(limit: int = 50, _: dict = Depends(require_admin)):
     return conversation_store.list_recent(limit=limit)
+
+
+@router.get("/audit")
+def audit(limit: int = 100, _: dict = Depends(require_admin)):
+    return audit_log.list_logs(limit=limit)

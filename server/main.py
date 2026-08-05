@@ -34,6 +34,7 @@ from routes.accounts import router as accounts_router
 from routes.chat import router as chat_router
 from routes.dashboard import router as dashboard_router
 from routes.knowledge import router as knowledge_router
+from routes.knowledge_bases import router as knowledge_bases_router
 
 app = FastAPI(
     title="AI 应用平台 API",
@@ -66,6 +67,7 @@ app.include_router(accounts_router)
 app.include_router(chat_router)
 app.include_router(dashboard_router)
 app.include_router(knowledge_router)
+app.include_router(knowledge_bases_router)
 
 
 if __name__ == "__main__":

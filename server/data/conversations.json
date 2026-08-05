@@ -460,5 +460,103 @@
     "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
     "query": "企业微信的差旅报销要怎么做",
     "created_at": "2026-08-04T17:09:42.611203"
+  },
+  {
+    "id": "5ee8b9b9-7194-4899-88f3-a677bf9d274c",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-05T13:37:30.030219"
+  },
+  {
+    "id": "decddfe9-53f5-46f3-bfa5-478a2f1c9611",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "报销",
+    "created_at": "2026-08-05T13:37:46.073251"
+  },
+  {
+    "id": "6dbb00b7-5fbb-4d86-ad75-dae76b3627f1",
+    "username": "2",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "报销",
+    "created_at": "2026-08-05T13:38:37.428559"
+  },
+  {
+    "id": "f29b323f-1969-4860-a83b-f39e604597de",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "联想有什么品牌",
+    "created_at": "2026-08-05T14:04:29.370218"
+  },
+  {
+    "id": "3f476aa8-c621-45bf-bbd4-71ec11c6b940",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "旅游发票怎么报销",
+    "created_at": "2026-08-05T14:05:11.493494"
+  },
+  {
+    "id": "c0848991-7549-4645-9ec8-56cd54eead6a",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "报销",
+    "created_at": "2026-08-05T14:05:25.227787"
+  },
+  {
+    "id": "ea218a55-2f58-45c1-8f0a-39809223de83",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "联想电脑有什么",
+    "created_at": "2026-08-05T14:48:47.779430"
+  },
+  {
+    "id": "ce42d8ce-1999-48dd-b214-9ccc1e936e1e",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "报销",
+    "created_at": "2026-08-05T14:48:55.498254"
+  },
+  {
+    "id": "157ca011-658c-4b71-8da9-6440c81432cf",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "发票",
+    "created_at": "2026-08-05T14:49:05.198492"
+  },
+  {
+    "id": "558d9d71-37fc-43cd-9716-0e0abf57c738",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "报销",
+    "created_at": "2026-08-05T14:49:51.997524"
+  },
+  {
+    "id": "7cdbbc4a-988b-4b8f-9705-72ba44dcdeb2",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "报销",
+    "created_at": "2026-08-05T15:21:14.804661"
+  },
+  {
+    "id": "72592bc9-ca8f-4ab5-bfd6-3ee72d0b2148",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "联想",
+    "created_at": "2026-08-05T15:21:24.302730"
+  },
+  {
+    "id": "3cbede4f-6d3f-49e2-ab20-25df5f2cdf10",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "报销",
+    "created_at": "2026-08-05T15:21:47.060769"
+  },
+  {
+    "id": "2ac4683e-6ac0-411c-8567-58087db871a8",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "旅游报销",
+    "created_at": "2026-08-05T15:22:07.798420"
   }
 ]
