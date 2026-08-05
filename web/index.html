@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI应用平台</title>
+  <meta name="description" content="企业内部 AI 应用门户" />
+  <link rel="stylesheet" href="css/style.css?v=4" />
+</head>
+<body>
+
+  <!-- ══════════ 登录页 ══════════ -->
+  <div id="login-view" class="auth-view">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="auth-logo">🤖</div>
+        <h1 class="auth-title">AI应用平台</h1>
+        <p class="auth-subtitle">企业内部 AI 助手集合</p>
+      </div>
+      <form id="login-form" class="auth-form" autocomplete="off">
+        <label class="field">
+          <span class="field-label">用户名</span>
+          <input id="login-username" type="text" class="field-input" placeholder="请输入用户名" required autocomplete="username" />
+        </label>
+        <label class="field">
+          <span class="field-label">密码</span>
+          <input id="login-password" type="password" class="field-input" placeholder="请输入密码" required autocomplete="current-password" />
+        </label>
+        <div id="login-error" class="form-error" hidden></div>
+        <button type="submit" id="login-btn" class="btn-primary btn-block">登 录</button>
+      </form>
+      <p class="auth-footer">首次使用请使用管理员账号登录</p>
+    </div>
+  </div>
+
+  <!-- ══════════ 应用门户页 ══════════ -->
+  <div id="portal-view" class="app-view" hidden>
+    <header class="site-header">
+      <div class="container header-row">
+        <div class="header-brand">
+          <h1 class="site-title">AI应用平台</h1>
+          <p class="site-subtitle">企业内部 AI 助手集合</p>
+        </div>
+        <div class="header-user">
+          <button id="admin-btn" class="btn-ghost" hidden>⚙️ 管理后台</button>
+          <button id="back-btn" class="btn-ghost" hidden>← 返回</button>
+          <span id="user-avatar" class="user-chip"></span>
+          <button id="logout-btn" class="btn-outline">退出登录</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="apps-section">
+        <h2 class="section-title">AI应用列表</h2>
+        <div id="apps-grid" class="apps-grid">
+          <p class="empty-tip">加载中...</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2026 AI应用平台 · 内部使用</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ══════════ 管理后台页 ══════════ -->
+  <div id="admin-view" class="app-view" hidden>
+    <header class="site-header admin-header">
+      <div class="container header-row">
+        <div class="header-brand">
+          <h1 class="site-title">管理后台</h1>
+          <p class="site-subtitle">工作流与账号管理</p>
+        </div>
+        <div class="header-user">
+          <button id="admin-back-portal" class="btn-ghost">← 返回应用</button>
+          <span id="admin-user-chip" class="user-chip"></span>
+          <button id="admin-logout-btn" class="btn-outline">退出登录</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <nav class="admin-tabs">
+        <button class="admin-tab active" data-tab="workflows">工作流管理</button>
+        <button class="admin-tab" data-tab="knowledge">知识库管理</button>
+        <button class="admin-tab" data-tab="accounts">账号管理</button>
+        <button class="admin-tab" data-tab="dashboard">数据概览</button>
+      </nav>
+
+      <!-- 工作流管理 -->
+      <section id="tab-workflows" class="admin-panel">
+        <div class="panel-head">
+          <h3>工作流列表</h3>
+          <button id="wf-add-btn" class="btn-primary btn-sm">＋ 新增工作流</button>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>名称</th>
+              <th>类型</th>
+              <th>分类</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="wf-table-body"></tbody>
+        </table>
+
+        <!-- 新增/编辑表单 -->
+        <div id="wf-form-wrap" class="form-card" hidden>
+          <h3 id="wf-form-title">新增工作流</h3>
+          <form id="wf-form">
+            <input type="hidden" id="wf-id" />
+            <div class="form-grid">
+              <label class="field"><span class="field-label">名称 *</span><input id="wf-name" class="field-input" required /></label>
+              <label class="field"><span class="field-label">图标</span><input id="wf-icon" class="field-input" value="🤖" /></label>
+              <label class="field"><span class="field-label">类型 *</span>
+                <select id="wf-type" class="field-input">
+                  <option value="chatflow">chatflow 对话流</option>
+                  <option value="workflow">workflow 工作流</option>
+                </select>
+              </label>
+              <label class="field"><span class="field-label">分类</span><input id="wf-category" class="field-input" value="默认" /></label>
+              <label class="field field-full"><span class="field-label">描述</span><input id="wf-desc" class="field-input" /></label>
+              <label class="field field-full"><span class="field-label">Dify API Key（编辑时留空表示不修改）</span><input id="wf-apikey" class="field-input" type="password" placeholder="app-xxx（留空则不修改）" /></label>
+              <label class="field field-full"><span class="field-label">Dify 服务地址 baseUrl</span><input id="wf-baseurl" class="field-input" placeholder="http://172.20.45.95" /></label>
+              <label class="field field-full"><span class="field-label">iframe 对话地址（已改用站内聊天，此项可留空）</span><input id="wf-iframeurl" class="field-input" placeholder="http://172.20.45.95/chatbot/xxx（可选）" /></label>
+              <label class="field field-full field-check">
+                <input id="wf-enabled" type="checkbox" checked /> 启用（普通用户可见）
+              </label>
+              <div class="field field-full">
+                <span class="field-label" style="font-weight:700; color:#2563EB;">RAGFlow 知识库检索（可选）</span>
+              </div>
+              <label class="field field-full field-check">
+                <input id="wf-ragenabled" type="checkbox" /> 启用 RAGFlow 检索（聊天前先检索知识库并注入上下文）
+              </label>
+              <label class="field"><span class="field-label">数据集 ID（多个用逗号分隔）</span><input id="wf-ragdatasets" class="field-input" placeholder="如 ds_xxx, ds_yyy" /></label>
+              <label class="field"><span class="field-label">检索片段数 TopK</span><input id="wf-ragtopk" class="field-input" type="number" min="1" max="10" value="3" /></label>
+              <label class="field"><span class="field-label">注入 Dify 的变量名</span><input id="wf-ragcontextvar" class="field-input" value="context" /></label>
+            </div>
+            <div class="form-actions">
+              <button type="button" id="wf-form-cancel" class="btn-outline">取消</button>
+              <button type="submit" class="btn-primary">保存</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- 知识库管理 -->
+      <section id="tab-knowledge" class="admin-panel" hidden>
+        <div class="panel-head"><h3>RAGFlow 知识库配置</h3></div>
+        <p style="color:#6B7280; font-size:0.9rem; margin-bottom:16px;">
+          配置 RAGFlow 服务地址与 API Key。配置并启用后，启用了“RAGFlow 检索”的工作流，会在聊天前自动检索知识库，把结果作为上下文注入 Dify。
+        </p>
+        <form id="kb-form" class="form-grid">
+          <label class="field field-full"><span class="field-label">RAGFlow 服务地址 baseUrl</span><input id="kb-baseurl" class="field-input" placeholder="如 http://127.0.0.1:9380" /></label>
+          <label class="field field-full"><span class="field-label">API Key（留空表示不修改）</span><input id="kb-apikey" class="field-input" type="password" placeholder="ragflow-xxx" /></label>
+          <label class="field field-full field-check">
+            <input id="kb-enabled" type="checkbox" /> 启用 RAGFlow（关闭则所有工作流都不再检索）
+          </label>
+          <div class="field field-full">
+            <div style="display:flex; gap:12px; align-items:center;">
+              <button type="button" id="kb-test-btn" class="btn-outline" style="color:#2563EB; border-color:#2563EB;">测试连接</button>
+              <button type="button" id="kb-save-btn" class="btn-primary">保存配置</button>
+            </div>
+          </div>
+          <div id="kb-test-status" class="kb-status"></div>
+          <label class="field field-full"><span class="field-label">可用数据集（测试成功后自动列出）</span>
+            <select id="kb-datasets" class="field-input" multiple size="6"></select>
+          </label>
+          <label class="field field-full"><span class="field-label">选择的数据集 ID（自动同步，也可手动填写）</span><input id="kb-dataset-ids" class="field-input" placeholder="ds_xxx, ds_yyy" /></label>
+        </form>
+      </section>
+
+      <!-- 账号管理 -->
+      <section id="tab-accounts" class="admin-panel" hidden>
+        <div class="panel-head">
+          <h3>账号列表</h3>
+          <button id="acc-add-btn" class="btn-primary btn-sm">＋ 添加账号</button>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr><th>用户名</th><th>角色</th><th>操作</th></tr>
+          </thead>
+          <tbody id="acc-table-body"></tbody>
+        </table>
+
+        <div id="acc-form-wrap" class="form-card" hidden>
+          <h3>添加账号</h3>
+          <form id="acc-form">
+            <div class="form-grid">
+              <label class="field"><span class="field-label">用户名 *</span><input id="acc-username" class="field-input" required /></label>
+              <label class="field"><span class="field-label">密码 *</span><input id="acc-password" class="field-input" type="password" required minlength="6" /></label>
+              <label class="field"><span class="field-label">角色 *</span>
+                <select id="acc-role" class="field-input">
+                  <option value="user">普通用户</option>
+                  <option value="admin">管理员</option>
+                </select>
+              </label>
+            </div>
+            <div class="form-actions">
+              <button type="button" id="acc-form-cancel" class="btn-outline">取消</button>
+              <button type="submit" class="btn-primary">保存</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- 数据概览 -->
+      <section id="tab-dashboard" class="admin-panel" hidden>
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card"><div class="stat-num" id="stat-workflows">-</div><div class="stat-label">工作流数量</div></div>
+          <div class="stat-card"><div class="stat-num" id="stat-users">-</div><div class="stat-label">普通用户</div></div>
+          <div class="stat-card"><div class="stat-num" id="stat-admins">-</div><div class="stat-label">管理员</div></div>
+          <div class="stat-card"><div class="stat-num" id="stat-convs">-</div><div class="stat-label">对话次数</div></div>
+        </div>
+        <div class="panel-head" style="margin-top:28px"><h3>最近对话</h3></div>
+        <table class="data-table">
+          <thead><tr><th>时间</th><th>用户</th><th>工作流ID</th><th>问题</th></tr></thead>
+          <tbody id="recent-table-body"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <!-- ══════════ 聊天面板（站内自定义聊天） ══════════ -->
+  <div id="chat-panel" class="chat-panel" aria-hidden="true">
+    <div class="chat-panel__inner">
+      <header class="chat-panel__header">
+        <div class="chat-panel__title">
+          <span id="chat-panel-icon" class="chat-panel__icon">🤖</span>
+          <span id="chat-panel-name">AI助手</span>
+        </div>
+        <div class="chat-panel__actions">
+          <button id="chat-clear-btn" class="chat-panel__clear" type="button" title="清空对话">🗑 清空</button>
+          <button id="chat-panel-close" class="chat-panel__close" type="button" aria-label="关闭聊天窗口">&times;</button>
+        </div>
+      </header>
+      <div id="chat-messages" class="chat-panel__body" role="log" aria-live="polite">
+        <div class="chat-empty-tip">👋 你好，我是 <span id="chat-empty-name">AI助手</span>，有什么可以帮你？</div>
+      </div>
+      <footer class="chat-panel__footer">
+        <textarea id="chat-input" class="chat-panel__input" rows="1" placeholder="输入你的问题，Enter 发送，Shift+Enter 换行"></textarea>
+        <button id="chat-send-btn" class="btn-primary chat-panel__send" type="button">发送</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- 脚本：auth → api → apps → chat → admin → app -->
+  <script src="js/auth.js?v=3"></script>
+  <script src="js/api.js?v=4"></script>
+  <script src="js/apps.js?v=3"></script>
+  <script src="js/chat.js?v=3"></script>
+  <script src="js/admin.js?v=4"></script>
+  <script src="js/app.js?v=3"></script>
+</body>
+</html>

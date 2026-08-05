@@ -1,0 +1,464 @@
+[
+  {
+    "id": "e38878b0-111e-426d-875e-09a3ac09d0ef",
+    "username": "admin",
+    "workflow_id": "nonexistent",
+    "query": "hi",
+    "created_at": "2026-08-04T10:46:50.486182"
+  },
+  {
+    "id": "1aa904f9-75a8-49f9-b9fa-ad389e4ebe0b",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "??",
+    "created_at": "2026-08-04T14:31:16.031932"
+  },
+  {
+    "id": "c035d294-33df-4355-898c-d8ee6c4f0a78",
+    "username": "aaa",
+    "workflow_id": "60113450-afc6-4959-8107-cf021f2eafff",
+    "query": "你好",
+    "created_at": "2026-08-04T14:44:25.376288"
+  },
+  {
+    "id": "b8f96d49-0cfc-4aa5-8ff8-5281a392c943",
+    "username": "aaa",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-04T14:44:31.150508"
+  },
+  {
+    "id": "97fe3b56-920d-4e6e-afd7-fc77b93a60eb",
+    "username": "aaa",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "发票要怎么开",
+    "created_at": "2026-08-04T14:44:55.831810"
+  },
+  {
+    "id": "b929ce14-96b1-47e1-8afa-b86038ddbdf2",
+    "username": "aaa",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-04T14:52:46.468447"
+  },
+  {
+    "id": "ba08d692-4153-4df5-85b0-eb7612573cf6",
+    "username": "aaa",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-04T14:53:25.146158"
+  },
+  {
+    "id": "501450a3-be5f-42df-9fa8-b738b9306f92",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-04T14:56:09.176805"
+  },
+  {
+    "id": "98de4879-c59d-4528-bfe3-655ba418c66f",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "我想要MW905的门，你帮我看看哪些配件",
+    "created_at": "2026-08-04T15:02:14.548504"
+  },
+  {
+    "id": "8cd8f8ea-33ff-4e9c-8516-9a9ab48813ce",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好我想问一下棕色门有哪些型号",
+    "created_at": "2026-08-04T15:02:59.137269"
+  },
+  {
+    "id": "9780b670-2d6c-43c5-a52a-2f26148cfadc",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-04T15:12:56.058269"
+  },
+  {
+    "id": "e6dc5acb-eed1-400d-a1f9-d04321fb8aa0",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-04T15:13:12.294621"
+  },
+  {
+    "id": "43d53fe6-45e4-448f-85b9-f4e9385c7831",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-04T15:19:00.989042"
+  },
+  {
+    "id": "c1730b9f-4bb9-474a-b190-a9bf3fa715d7",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-04T15:21:52.559204"
+  },
+  {
+    "id": "2d9ce2d7-893c-4b80-8816-0f0c8a81fd5b",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-04T15:23:21.336893"
+  },
+  {
+    "id": "8c08e0e0-91dc-474a-8ad8-392fe95721da",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "hello",
+    "created_at": "2026-08-04T15:23:25.873960"
+  },
+  {
+    "id": "74809b96-cdbf-4b31-82cb-d29d8af03536",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-04T15:24:21.377210"
+  },
+  {
+    "id": "013bcef7-fd5a-4b70-9a8a-c56b53a9a334",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你有审作用",
+    "created_at": "2026-08-04T15:24:33.106119"
+  },
+  {
+    "id": "83eb780c-68d4-4ee2-a8a4-e2252a13f014",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你的作用是什么",
+    "created_at": "2026-08-04T15:24:47.506384"
+  },
+  {
+    "id": "361cc608-b2e8-49b9-8a01-8db5fbc1b03b",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-04T15:25:19.394002"
+  },
+  {
+    "id": "c3f4e296-ea07-4796-82bd-589be0f16f77",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "我想问一下棕色门板有什么型号",
+    "created_at": "2026-08-04T15:25:50.286587"
+  },
+  {
+    "id": "ace90795-2799-4bb3-b03d-6053c61f8a07",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "棕色门板",
+    "created_at": "2026-08-04T15:27:51.740981"
+  },
+  {
+    "id": "b5f80315-0644-4909-89b7-5dd6a939484e",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "我想了解MW901型号",
+    "created_at": "2026-08-04T15:29:45.092193"
+  },
+  {
+    "id": "7f719eff-5bdf-4a29-afb2-e9d08a310daf",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "我想问一下有没有隔音条的门",
+    "created_at": "2026-08-04T15:33:37.783551"
+  },
+  {
+    "id": "c21036b4-d46e-4d88-8167-7723ba89ebdb",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "有没有mw901",
+    "created_at": "2026-08-04T15:34:02.478524"
+  },
+  {
+    "id": "57509a38-5fba-4f05-a1ac-5eff96ba9b18",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MWP901",
+    "created_at": "2026-08-04T15:37:43.455917"
+  },
+  {
+    "id": "e0014fae-e571-4311-b73f-50983660a0d8",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MWP901",
+    "created_at": "2026-08-04T15:43:25.256465"
+  },
+  {
+    "id": "6cd4dc95-9c0d-4ecd-be59-892665be32db",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MWP901",
+    "created_at": "2026-08-04T15:44:46.729963"
+  },
+  {
+    "id": "face9003-cfac-4970-8f08-54ce9531b6a4",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MW901",
+    "created_at": "2026-08-04T15:47:36.922100"
+  },
+  {
+    "id": "7b9ebcd3-7454-468f-9530-087b760baf53",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MW901",
+    "created_at": "2026-08-04T15:49:20.276932"
+  },
+  {
+    "id": "8f4c0950-f79f-4135-bb79-579bebf5b69a",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MWP90",
+    "created_at": "2026-08-04T15:50:54.869671"
+  },
+  {
+    "id": "6ffce76b-c0e0-49c8-aece-37ed092329a6",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MWP901",
+    "created_at": "2026-08-04T15:51:13.869149"
+  },
+  {
+    "id": "6d666c31-3522-4f65-88c7-8b8633b7b764",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "棕色的门有什么型号",
+    "created_at": "2026-08-04T15:52:52.903555"
+  },
+  {
+    "id": "6a49a8be-5979-453a-afcf-a77ba48c658e",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "如何开发票",
+    "created_at": "2026-08-04T15:54:34.929060"
+  },
+  {
+    "id": "9cf49ddb-5dd6-4019-94d5-e8976a264429",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MW901",
+    "created_at": "2026-08-04T16:09:13.442874"
+  },
+  {
+    "id": "e45b43b9-a7bb-4dda-9938-50609c1006bd",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "WM901",
+    "created_at": "2026-08-04T16:09:50.186761"
+  },
+  {
+    "id": "d804c6e2-a44b-4208-aa07-3fa3dd51d7d3",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "棕色的门有哪些型号",
+    "created_at": "2026-08-04T16:11:24.752506"
+  },
+  {
+    "id": "b26e4387-d759-4775-aab1-49c6b320f720",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "我想要白色或黄色的有哪些型号",
+    "created_at": "2026-08-04T16:32:46.331135"
+  },
+  {
+    "id": "24377943-a96b-44b3-816f-e2af4411e045",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "有没有又含有静音条的",
+    "created_at": "2026-08-04T16:33:16.311931"
+  },
+  {
+    "id": "5363309e-1ef3-4256-8590-f309a89c1b7a",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "隔音条也可以",
+    "created_at": "2026-08-04T16:33:48.595806"
+  },
+  {
+    "id": "dcac11e0-436f-47ef-ae74-7919e04a6fb5",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MWP907这个的全部型号",
+    "created_at": "2026-08-04T16:34:40.863637"
+  },
+  {
+    "id": "a9581f3a-f3e7-4eec-b982-45fa1d1e7e88",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "棕色门有哪些型号",
+    "created_at": "2026-08-04T16:39:33.079252"
+  },
+  {
+    "id": "684b58b8-90ad-4bcb-b4a4-58ed5e0cb499",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MFP620这个型号有没有隔音条",
+    "created_at": "2026-08-04T16:40:05.962412"
+  },
+  {
+    "id": "99c65227-315a-462b-be22-1458da9407d9",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "发票怎么报销",
+    "created_at": "2026-08-04T16:40:40.962103"
+  },
+  {
+    "id": "499b75c1-d918-451f-b579-d4eb194c64c2",
+    "username": "12345",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "差旅报销",
+    "created_at": "2026-08-04T16:41:11.598754"
+  },
+  {
+    "id": "bd7d6657-171a-4f23-8c9e-fd8ebf731651",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "有什么推荐",
+    "created_at": "2026-08-04T16:49:24.569605"
+  },
+  {
+    "id": "b21f39f5-4b76-431c-aca7-5d9dc5de61f2",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "你有什么推荐",
+    "created_at": "2026-08-04T16:51:08.871733"
+  },
+  {
+    "id": "5c6a373b-7596-4136-9306-920a36146217",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "你好",
+    "created_at": "2026-08-04T16:52:12.132823"
+  },
+  {
+    "id": "32405dc1-56e4-47d0-8585-ea5feb625776",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "你好",
+    "created_at": "2026-08-04T16:54:15.930047"
+  },
+  {
+    "id": "07ec8fa7-748a-43bf-8a05-c277a2e2c3d8",
+    "username": "admin",
+    "workflow_id": "c4e67970-984b-4680-9a76-31cc3b22a3ce",
+    "query": "你好",
+    "created_at": "2026-08-04T16:54:22.797167"
+  },
+  {
+    "id": "6fac41b4-593f-41d1-8a78-bd57daedf9fd",
+    "username": "admin",
+    "workflow_id": "c4e67970-984b-4680-9a76-31cc3b22a3ce",
+    "query": "你好",
+    "created_at": "2026-08-04T16:54:42.349045"
+  },
+  {
+    "id": "302044ea-add4-430a-9829-4fbdd8b4f41e",
+    "username": "admin",
+    "workflow_id": "c4e67970-984b-4680-9a76-31cc3b22a3ce",
+    "query": "你好",
+    "created_at": "2026-08-04T16:55:46.659245"
+  },
+  {
+    "id": "17d33df6-e20e-49ff-9638-c3360a936076",
+    "username": "admin",
+    "workflow_id": "c4e67970-984b-4680-9a76-31cc3b22a3ce",
+    "query": "你在干啥",
+    "created_at": "2026-08-04T16:55:55.057321"
+  },
+  {
+    "id": "73cd5872-da8a-4096-b9db-a423708f853c",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "你好",
+    "created_at": "2026-08-04T16:59:28.428303"
+  },
+  {
+    "id": "b0d6d260-72bd-48e4-a440-8fcaa6cce28d",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "我想要棕色的门",
+    "created_at": "2026-08-04T17:01:39.441951"
+  },
+  {
+    "id": "ff5bf00a-1cd4-476d-b9c0-64a8cd6061bc",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "如果换成暖黄色的呢",
+    "created_at": "2026-08-04T17:02:16.077146"
+  },
+  {
+    "id": "818ce375-3d95-479b-84f5-bb1eda8e07f8",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "还要有静音条",
+    "created_at": "2026-08-04T17:02:46.431803"
+  },
+  {
+    "id": "899f8b14-dddd-4156-9db1-7d1975c99026",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "那就换成门底隔音条",
+    "created_at": "2026-08-04T17:03:19.694502"
+  },
+  {
+    "id": "7ca38066-bffe-46b1-b38a-fa520e1b1baf",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "你好",
+    "created_at": "2026-08-04T17:04:08.702152"
+  },
+  {
+    "id": "c219eb29-aba6-4d7a-9bee-b6ddb350272e",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "你们有哪些产品",
+    "created_at": "2026-08-04T17:04:48.196619"
+  },
+  {
+    "id": "59073fa8-a684-4837-9a08-7fca41afacf9",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "怎么开发票",
+    "created_at": "2026-08-04T17:05:27.933329"
+  },
+  {
+    "id": "4bc693ac-eed9-463b-950c-02e2dce720ef",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "报销要怎么报销",
+    "created_at": "2026-08-04T17:07:08.558531"
+  },
+  {
+    "id": "8aeae85e-5d49-43f3-b93e-23b4d474cacf",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "差旅报销，我现在只有网页版",
+    "created_at": "2026-08-04T17:07:56.988200"
+  },
+  {
+    "id": "e1e9fa51-eff5-4293-8c4c-f398ec14d46b",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "网页版报销有什么",
+    "created_at": "2026-08-04T17:08:27.667597"
+  },
+  {
+    "id": "7d7045e6-366f-4696-be48-d76832548ec6",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "网页版报销要怎么做",
+    "created_at": "2026-08-04T17:08:45.990499"
+  },
+  {
+    "id": "34f2a1c8-19b7-4b0d-85b4-89cc497bc5d0",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "企业微信的差旅报销要怎么做",
+    "created_at": "2026-08-04T17:09:42.611203"
+  }
+]

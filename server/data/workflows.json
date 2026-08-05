@@ -1,0 +1,48 @@
+[
+  {
+    "id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "name": "test",
+    "icon": "🎙️",
+    "description": "基于 Dify 的语音输入助手，支持语音问答与电脑操作查询",
+    "type": "chatflow",
+    "category": "默认",
+    "apiKey": "app-ucP8Taq3oeaGQu8fjAVxevsK",
+    "baseUrl": "https://192.168.77.33:8443",
+    "iframeUrl": "",
+    "enabled": true,
+    "ragEnabled": true,
+    "ragDatasetIds": [
+      "808648b08f0511f1a344c74ab4e31dc9"
+    ],
+    "ragTopK": 3,
+    "ragContextVar": "context"
+  },
+  {
+    "id": "60113450-afc6-4959-8107-cf021f2eafff",
+    "name": "技术助手",
+    "icon": "💻",
+    "description": "解答技术开发相关问题，提供解决方案建议",
+    "type": "chatflow",
+    "category": "默认",
+    "apiKey": "",
+    "baseUrl": "http://172.20.45.95",
+    "iframeUrl": "http://172.20.45.95/chatbot/riEL4CkBebeJEHDS",
+    "enabled": true
+  },
+  {
+    "id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "name": "助手",
+    "icon": "🤖",
+    "description": "",
+    "type": "chatflow",
+    "category": "默认",
+    "apiKey": "app-g7M30TOOS8jpyUhkD2HAi4EV",
+    "baseUrl": "http://172.20.40.222:8889",
+    "iframeUrl": "",
+    "enabled": true,
+    "ragEnabled": false,
+    "ragDatasetIds": [],
+    "ragTopK": 3,
+    "ragContextVar": "context"
+  }
+]
