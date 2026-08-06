@@ -22,7 +22,12 @@
       },
       {
         "baseId": "045c832a-087e-4bc6-be3e-80a685174de8",
-        "datasetId": "808648b08f0511f1a344c74ab4e31dc9",
+        "datasetId": "54ff2db68bbc11f1a0f9bfdfd939117d",
+        "documentIds": []
+      },
+      {
+        "baseId": "ae07008c-da2a-4a72-b380-f1406c0bbec2",
+        "datasetId": "a46801c281b511f1a23313b0b027c16e",
         "documentIds": []
       }
     ]
@@ -53,6 +58,13 @@
     "ragEnabled": false,
     "ragDatasetIds": [],
     "ragTopK": 3,
-    "ragContextVar": "context"
+    "ragContextVar": "context",
+    "ragBindings": [
+      {
+        "baseId": "ae07008c-da2a-4a72-b380-f1406c0bbec2",
+        "datasetId": "865e05a081b511f1a23313b0b027c16e",
+        "documentIds": []
+      }
+    ]
   }
 ]

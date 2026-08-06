@@ -9,9 +9,18 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from auth.security import require_admin, hash_password
 from models.schemas import AccountCreate, AccountUpdate, AccountPublic
-from services import user_store, audit_log
+from services import user_store, audit_log, workflow_store
 
 router = APIRouter(prefix="/api/accounts", tags=["Accounts"])
+
+
+def _wf_ids_to_names(workflow_ids: list) -> list:
+    """把工作流 UUID 列表转换为工作流名称列表，找不到的降级为 id 前 8 位。"""
+    names = []
+    for wid in workflow_ids or []:
+        wf = workflow_store.get_workflow(wid)
+        names.append(wf.get("name") if wf else wid[:8])
+    return names
 
 
 @router.get("", response_model=list[AccountPublic])
@@ -35,7 +44,7 @@ def create_account(body: AccountCreate, current_user: dict = Depends(require_adm
     audit_log.add_log(
         current_user["username"],
         "新增账号",
-        f"账号「{result.get('username')}」(角色={result.get('role')})，授权工作流: {result.get('allowed_workflow_ids') or []}",
+        f"账号「{result.get('username')}」(角色={result.get('role')})，授权工作流: {_wf_ids_to_names(result.get('allowed_workflow_ids'))}",
     )
     return result
 
@@ -58,7 +67,7 @@ def update_account(username: str, body: AccountUpdate, current_user: dict = Depe
     audit_log.add_log(
         current_user["username"],
         "修改账号",
-        f"账号「{result.get('username')}」(角色={result.get('role')})，授权工作流: {result.get('allowed_workflow_ids') or []}",
+        f"账号「{result.get('username')}」(角色={result.get('role')})，授权工作流: {_wf_ids_to_names(result.get('allowed_workflow_ids'))}",
     )
     return result
 

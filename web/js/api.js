@@ -47,6 +47,32 @@ var API_BASE = window.API_BASE || 'http://127.0.0.1:8100';
     put: function (url, body) { return request('PUT', url, body); },
     del: function (url) { return request('DELETE', url); },
 
+    // 文件上传：multipart 方式，返回 {upload_file_id, name, size, type}
+    upload: function (file) {
+      return new Promise(function (resolve, reject) {
+        var fd = new FormData();
+        fd.append('file', file);
+        var headers = {};
+        var token = getToken();
+        if (token) headers['Authorization'] = 'Bearer ' + token;
+
+        fetch(API_BASE + '/api/upload', {
+          method: 'POST',
+          headers: headers,
+          body: fd,
+        }).then(function (resp) {
+          if (resp.status === 401) {
+            if (window.Auth) window.Auth.clearSession();
+            throw new Error('登录已过期，请重新登录');
+          }
+          return resp.json().catch(function () { return {}; }).then(function (data) {
+            if (!resp.ok) throw new Error(data.detail || '上传失败 (' + resp.status + ')');
+            return data;
+          });
+        }).then(resolve).catch(reject);
+      });
+    },
+
     // 工作流
     listWorkflows: function () { return request('GET', '/api/workflows'); },
     listAllWorkflows: function () { return request('GET', '/api/workflows/all'); },
@@ -71,6 +97,11 @@ var API_BASE = window.API_BASE || 'http://127.0.0.1:8100';
     saveKnowledgeConfig: function (data) { return request('PUT', '/api/knowledge/config', data); },
     testKnowledge: function (data) { return request('POST', '/api/knowledge/test', data); },
     deleteDataset: function (dataset_id) { return request('DELETE', '/api/knowledge/datasets/' + encodeURIComponent(dataset_id)); },
+
+    // 会话历史（历史记录 + 续聊）
+    listSessions: function () { return request('GET', '/api/sessions'); },
+    getSession: function (id) { return request('GET', '/api/sessions/' + encodeURIComponent(id)); },
+    deleteSession: function (id) { return request('DELETE', '/api/sessions/' + encodeURIComponent(id)); },
 
     // 知识库实体（多 RAGFlow 服务器，每条自带 url/key，有归属）
     listKnowledgeBases: function () { return request('GET', '/api/knowledge-bases'); },
@@ -116,13 +147,19 @@ var API_BASE = window.API_BASE || 'http://127.0.0.1:8100';
       var buffer = '';
       var currentAnswer = '';
       var currentConversationId = '';
+      var currentSessionId = '';
       var currentEvent = 'message';
 
       function handleDataLine(dataStr) {
-        if (dataStr === '[DONE]') { onDone && onDone(currentAnswer, currentConversationId); return; }
+        // [DONE] 仅标记 Dify 流结束；onDone 统一在 result.done 时触发，以便捕获 session 事件
+        if (dataStr === '[DONE]') { return; }
         if (!dataStr) return;
         try {
           var obj = JSON.parse(dataStr);
+          if (currentEvent === 'session') {
+            if (obj.session_id) currentSessionId = obj.session_id;
+            return;
+          }
           if (currentEvent === 'error') {
             onError && onError(obj.message || '请求出错');
             return;
@@ -156,7 +193,7 @@ var API_BASE = window.API_BASE || 'http://127.0.0.1:8100';
           if (result.done) {
             buffer += decoder.decode();
             parse();
-            onDone && onDone(currentAnswer, currentConversationId);
+            onDone && onDone(currentAnswer, currentConversationId, currentSessionId);
             return;
           }
           buffer += decoder.decode(result.value, { stream: true });

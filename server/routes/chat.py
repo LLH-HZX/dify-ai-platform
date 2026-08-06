@@ -13,7 +13,7 @@ from fastapi.responses import StreamingResponse
 
 from auth.security import get_current_user
 from models.schemas import ChatRequest, ChatResponse
-from services import conversation_store, knowledge_store, knowledge_bases
+from services import conversation_store, knowledge_store, knowledge_bases, session_store
 from services.dify_service import call_dify_blocking, call_dify_streaming, DifyAPIError
 from services.ragflow_service import retrieve, build_context, RAGFlowAPIError
 from services.workflow_store import get_workflow
@@ -142,6 +142,17 @@ async def _enrich_legacy(wf: dict, query: str, inputs: dict, dataset_ids: list[s
     return inputs
 
 
+def _resolve_session(body: ChatRequest, username: str) -> dict:
+    """根据请求确定会话：带 session_id 且归属当前用户则沿用，否则新建会话。返回会话记录。"""
+    wf = get_workflow(body.workflow_id)
+    wf_type = (wf or {}).get("type", "chatflow")
+    if body.session_id:
+        session = session_store.get_session(username, body.session_id)
+        if session is not None:
+            return session
+    return session_store.create_session(username, body.workflow_id, wf_type, body.query)
+
+
 @router.post("/chat")
 async def send_message(body: ChatRequest, current_user: dict = Depends(get_current_user)):
     files_dicts = [f.model_dump() for f in (body.files or [])]
@@ -163,12 +174,18 @@ async def send_message(body: ChatRequest, current_user: dict = Depends(get_curre
         # 统计失败不影响主流程
         pass
 
+    # 解析/创建会话
+    session = _resolve_session(body, username)
+    session_id = session["id"]
+    # 续聊钥匙：优先用前端传的 conversation_id，否则沿用会话已保存的
+    conversation_id = body.conversation_id or session.get("conversation_id", "") or ""
+
     # 注入 RAGFlow 检索上下文
     enriched_inputs = await _enrich_with_ragflow(body.workflow_id, body.query, body.inputs)
 
     if body.response_mode == "streaming":
         return StreamingResponse(
-            _stream_wrapper(body, files_dicts, enriched_inputs),
+            _stream_wrapper(body, session_id, username, conversation_id, files_dicts, enriched_inputs),
             media_type="text/event-stream",
             headers={
                 "Cache-Control": "no-cache",
@@ -182,25 +199,64 @@ async def send_message(body: ChatRequest, current_user: dict = Depends(get_curre
             workflow_id=body.workflow_id,
             query=body.query,
             user=username,
-            conversation_id=body.conversation_id,
+            conversation_id=conversation_id,
             inputs=enriched_inputs,
             files=files_dicts,
         )
-        return ChatResponse(**result)
+        # 落库用户消息 + 助手回复 + conversation_id
+        try:
+            session_store.append_message(session_id, username, "user", body.query)
+            session_store.append_message(
+                session_id, username, "assistant", result.get("answer", ""),
+                conversation_id=result.get("conversation_id") or None,
+            )
+        except Exception:
+            pass
+        return ChatResponse(**result, session_id=session_id)
     except DifyAPIError as e:
         raise HTTPException(status_code=e.status_code, detail=e.message)
 
 
-async def _stream_wrapper(body: ChatRequest, files_dicts: list[dict], inputs: dict):
+async def _stream_wrapper(body: ChatRequest, session_id: str, username: str,
+                          conversation_id: str, files_dicts: list[dict], inputs: dict):
+    """流式转发 Dify 并累积回答，结束后落库会话消息与 conversation_id。"""
+    answer_parts: list[str] = []
+    conv_id = conversation_id
     try:
         async for chunk in call_dify_streaming(
             workflow_id=body.workflow_id,
             query=body.query,
-            user="web-user",
-            conversation_id=body.conversation_id,
+            user=username,
+            conversation_id=conversation_id,
             inputs=inputs,
             files=files_dicts,
         ):
             yield chunk
+            # 累积 answer 与 conversation_id（解析 Dify SSE data 行）
+            for line in chunk.split("\n"):
+                if line.startswith("data:"):
+                    data_str = line[5:].strip()
+                    if data_str and data_str != "[DONE]":
+                        try:
+                            obj = json.loads(data_str)
+                            if obj.get("answer"):
+                                answer_parts.append(obj["answer"])
+                            if obj.get("conversation_id"):
+                                conv_id = obj["conversation_id"]
+                        except json.JSONDecodeError:
+                            pass
     except DifyAPIError as e:
         yield f"event: error\ndata: {json.dumps({'message': e.message}, ensure_ascii=False)}\n\n"
+    finally:
+        # 落库（即使中途错误也保存已收到部分）
+        try:
+            session_store.append_message(session_id, username, "user", body.query)
+            if answer_parts:
+                session_store.append_message(
+                    session_id, username, "assistant", "".join(answer_parts),
+                    conversation_id=conv_id or None,
+                )
+        except Exception:
+            pass
+    # 回传 session_id 供前端维护当前会话
+    yield f"event: session\ndata: {json.dumps({'session_id': session_id}, ensure_ascii=False)}\n\n"

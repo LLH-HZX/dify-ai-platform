@@ -10,6 +10,10 @@
     allWorkflows: [],
     accounts: [],
     knowledgeBases: [],
+    // 操作日志筛选状态
+    auditLogs: [],        // 全量日志缓存
+    auditUsername: '',    // 当前筛选的操作人
+    auditAction: '',      // 当前筛选的动作
 
     // ── Tab 切换 ──
     switchTab: function (tab) {
@@ -39,7 +43,9 @@
     loadAudit: async function () {
       try {
         var logs = await window.API.getAuditLogs();
-        renderAuditTable(logs || []);
+        Admin.auditLogs = logs || [];
+        populateAuditFilters();
+        applyAuditFilter();
       } catch (e) {
         window.showToast(e.message);
       }
@@ -248,16 +254,80 @@
       tbody.innerHTML = '<tr><td colspan="4" class="empty-cell">暂无对话记录</td></tr>';
       return;
     }
+    // 构建 id → 名称 映射（工作流 ID 显示为名称，更友好）
+    var wfNameMap = {};
+    (Admin.allWorkflows || []).forEach(function (w) { if (w && w.id) wfNameMap[w.id] = w.name; });
+    function displayWf(id) {
+      if (!id) return '-';
+      var name = wfNameMap[id];
+      if (name) return esc(name);
+      // 未知/未加载 → 降级为 ID 前 8 位，避免长串
+      return esc(id.substring(0, 8) + '…');
+    }
     tbody.innerHTML = recent.slice().reverse().map(function (r) {
       return (
         '<tr>' +
           '<td>' + esc(r.created_at || '-') + '</td>' +
           '<td>' + esc(r.username || '-') + '</td>' +
-          '<td>' + esc(r.workflow_id || '-') + '</td>' +
+          '<td>' + displayWf(r.workflow_id) + '</td>' +
           '<td>' + esc((r.query || '').substring(0, 40)) + '</td>' +
         '</tr>'
       );
     }).join('');
+  }
+
+  // ── 操作日志筛选 ──
+  function populateAuditFilters() {
+    var userSel = document.getElementById('audit-filter-user');
+    var actionSel = document.getElementById('audit-filter-action');
+    if (!userSel || !actionSel) return;
+
+    var users = [];
+    var actions = [];
+    Admin.auditLogs.forEach(function (l) {
+      if (l.username && users.indexOf(l.username) === -1) users.push(l.username);
+      if (l.action && actions.indexOf(l.action) === -1) actions.push(l.action);
+    });
+
+    // 保留当前选中值，重建选项
+    var curUser = userSel.value;
+    var curAction = actionSel.value;
+    userSel.innerHTML = '<option value="">全部</option>' + users.map(function (u) {
+      return '<option value="' + esc(u) + '">' + esc(u) + '</option>';
+    }).join('');
+    actionSel.innerHTML = '<option value="">全部</option>' + actions.map(function (a) {
+      return '<option value="' + esc(a) + '">' + esc(a) + '</option>';
+    }).join('');
+
+    // 恢复选中（若该值仍存在）；否则归零
+    if (curUser && users.indexOf(curUser) !== -1) userSel.value = curUser; else userSel.value = '';
+    if (curAction && actions.indexOf(curAction) !== -1) actionSel.value = curAction; else actionSel.value = '';
+    Admin.auditUsername = userSel.value;
+    Admin.auditAction = actionSel.value;
+  }
+
+  function applyAuditFilter() {
+    var userSel = document.getElementById('audit-filter-user');
+    var actionSel = document.getElementById('audit-filter-action');
+    if (userSel) Admin.auditUsername = userSel.value;
+    if (actionSel) Admin.auditAction = actionSel.value;
+
+    var filtered = Admin.auditLogs;
+    if (Admin.auditUsername) {
+      filtered = filtered.filter(function (l) { return l.username === Admin.auditUsername; });
+    }
+    if (Admin.auditAction) {
+      filtered = filtered.filter(function (l) { return l.action === Admin.auditAction; });
+    }
+    renderAuditTable(filtered);
+  }
+
+  function resetAuditFilter() {
+    var userSel = document.getElementById('audit-filter-user');
+    var actionSel = document.getElementById('audit-filter-action');
+    if (userSel) userSel.value = '';
+    if (actionSel) actionSel.value = '';
+    applyAuditFilter();
   }
 
   function renderAuditTable(logs) {
@@ -710,6 +780,14 @@
     // 操作日志刷新
     var auditRefreshBtn = document.getElementById('audit-refresh-btn');
     if (auditRefreshBtn) auditRefreshBtn.addEventListener('click', Admin.loadAudit);
+
+    // 操作日志筛选：change 时应用筛选，重置时清空
+    var auditUserSel = document.getElementById('audit-filter-user');
+    var auditActionSel = document.getElementById('audit-filter-action');
+    var auditResetBtn = document.getElementById('audit-filter-reset');
+    if (auditUserSel) auditUserSel.addEventListener('change', applyAuditFilter);
+    if (auditActionSel) auditActionSel.addEventListener('change', applyAuditFilter);
+    if (auditResetBtn) auditResetBtn.addEventListener('click', resetAuditFilter);
   };
 
   // ═══════════════ 工具 ═══════════════

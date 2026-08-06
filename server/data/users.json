@@ -6,7 +6,7 @@
   },
   {
     "username": "12345",
-    "password": "$2b$12$XWy3vYCgEYbPiR4MSY7gL.55q/ovfZKNJHD5wZdjmgLDbTByMhpiG",
+    "password": "$2b$12$FEtfXMSRMq0PUGLrN2ONEu1LthioC7d/.eufLIfOQWz.L/WVWmvtC",
     "role": "user",
     "allowed_workflow_ids": [
       "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
@@ -18,19 +18,55 @@
     "password": "$2b$12$8l49HttScNvnti6bYYrKoOgj7V5Vyg/8jhpp4buCRd.pm1jXCpQYO",
     "role": "user",
     "allowed_workflow_ids": [
-      "0abcd926-274d-491f-a450-93471e80b0f5"
+      "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd"
     ]
   },
   {
     "username": "001",
     "password": "$2b$12$Z6cRJQywhRnL/SIgyMsaI.EQrwuAx5LRREK7NKeGB4QQe.XonP8EK",
     "role": "admin",
-    "allowed_workflow_ids": []
+    "allowed_workflow_ids": [
+      "0abcd926-274d-491f-a450-93471e80b0f5"
+    ]
   },
   {
     "username": "002",
     "password": "$2b$12$QdiOYeDk5Vqd4gWvZpZLRuJNDs7bFdNfN6jZ1L9bctBFf/wkCoxc2",
     "role": "admin",
     "allowed_workflow_ids": []
+  },
+  {
+    "username": "003",
+    "password": "$2b$12$yQ.5i/TSSbxCKWvVMmV3betpm.6fyOu2ldQ2n7UT30XTx9.Nwu7ZW",
+    "role": "user",
+    "allowed_workflow_ids": [
+      "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+      "60113450-afc6-4959-8107-cf021f2eafff"
+    ]
+  },
+  {
+    "username": "004",
+    "password": "$2b$12$GJZk/hqmyy7k8mLzFHaiceg8lPfxbq47fOp.FUOZEPFdEpWeLdfLe",
+    "role": "user",
+    "allowed_workflow_ids": [
+      "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd"
+    ]
+  },
+  {
+    "username": "005",
+    "password": "$2b$12$AiFYtmErimvEgOwFvdKGwuISvV.8ItlOfWu2SY2/59m/LLk0.I8Ki",
+    "role": "user",
+    "allowed_workflow_ids": [
+      "60113450-afc6-4959-8107-cf021f2eafff",
+      "0abcd926-274d-491f-a450-93471e80b0f5"
+    ]
+  },
+  {
+    "username": "006",
+    "password": "$2b$12$n2TSeupA5.d/yaCzFshGwuZPxoCIkDKErWK4adTUzNSO24psU9OBy",
+    "role": "user",
+    "allowed_workflow_ids": [
+      "0abcd926-274d-491f-a450-93471e80b0f5"
+    ]
   }
 ]

@@ -558,5 +558,110 @@
     "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
     "query": "旅游报销",
     "created_at": "2026-08-05T15:22:07.798420"
+  },
+  {
+    "id": "14273b58-85aa-49e9-afbf-8910497c84d6",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "EPR要怎么操作",
+    "created_at": "2026-08-06T09:06:03.877330"
+  },
+  {
+    "id": "c94d18fe-beb8-4d97-9e36-d5eef4b7e70c",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MWP901型号的配置有什么",
+    "created_at": "2026-08-06T09:44:13.518836"
+  },
+  {
+    "id": "903aace6-25ae-436c-949d-82dd0bfcb1ff",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MWP901型号的配置有什么",
+    "created_at": "2026-08-06T09:44:43.953495"
+  },
+  {
+    "id": "9c024432-08b1-4007-8410-d61a416e5b31",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "MWP901型号的配置有什么",
+    "created_at": "2026-08-06T09:45:05.063705"
+  },
+  {
+    "id": "eb5ba0f5-8176-4ba4-8b68-1c5888578bc9",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "有什么好的？",
+    "created_at": "2026-08-06T09:55:22.316541"
+  },
+  {
+    "id": "f47725b8-b500-4391-adda-5911a2cfdd52",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "是的，电脑有什么？",
+    "created_at": "2026-08-06T09:56:03.896041"
+  },
+  {
+    "id": "b531edd4-f8f8-405f-810d-40bebec2b4c3",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-06T10:15:39.963224"
+  },
+  {
+    "id": "bd4fa99b-36d4-4690-8547-09d893c1e947",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "我想要了解联想",
+    "created_at": "2026-08-06T10:15:56.737405"
+  },
+  {
+    "id": "c4e38d4d-f326-4a69-abd3-1a8a1788aaa4",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "ERP是什么",
+    "created_at": "2026-08-06T10:16:29.057769"
+  },
+  {
+    "id": "441d9d22-f562-430f-8a3d-e49d29cfb382",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "我想了解华硕这个电脑",
+    "created_at": "2026-08-06T10:17:04.108277"
+  },
+  {
+    "id": "6662beab-ac7b-4e6c-aa23-84cec8a58b95",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "但是联想太贵了我只有9000的预算",
+    "created_at": "2026-08-06T10:17:47.941390"
+  },
+  {
+    "id": "9e55ca77-a266-44e5-bd4c-70e465f81ed7",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "无畏14仔细讲解这个型号",
+    "created_at": "2026-08-06T10:18:20.198572"
+  },
+  {
+    "id": "c5eda4ef-9b1c-45bd-9dc2-71d775b6b3f7",
+    "username": "001",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "你能干啥",
+    "created_at": "2026-08-06T13:16:14.044468"
+  },
+  {
+    "id": "4099813c-65a0-4e2b-8265-edf8881e0df6",
+    "username": "001",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "init是什么",
+    "created_at": "2026-08-06T13:16:31.478992"
+  },
+  {
+    "id": "dba35cc1-a8e9-4ef9-9039-cbad4ae78066",
+    "username": "001",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "你可以回答我",
+    "created_at": "2026-08-06T13:16:50.990617"
   }
 ]

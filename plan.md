@@ -146,3 +146,84 @@ d:/code2/void4/web/
 - **agent-browser**
 - Purpose: 用于在实现后验证站内聊天面板与管理后台知识库配置页面的实际渲染与交互（打开页面、输入、点击发送、查看 SSE 流式输出、测试连接按钮），并截图确认 UI 正常。
 - Expected outcome: 验证前端聊天面板可正常加载、可发送消息并渲染流式回复，管理后台知识库 tab 可保存/测试 RAGFlow 配置，发现并反馈渲染或交互问题。
+
+---
+
+# 历次计划记录（按时间顺序）
+
+> 本文档逐步归档各期开发计划，新计划追加在末尾（时间从早到晚）。每期标注功能目标、核心改动与完成状态。
+
+## 第 1 期：AI 门户基础改造（void3 → void4）
+
+- **状态**：✅ 已完成
+- **目标**：将原本纯前端 iframe 直接嵌入 Dify 的方式，升级为本地 FastAPI 后端封装 Dify API + 用户/管理员双角色登录与权限体系。
+- **核心改动**：
+  - 后端：`server/auth/security.py`（JWT 签发校验、密码哈希、角色依赖）、`server/routes/`（auth / workflows / accounts / chat / dashboard）、`server/config.py`（端口、JWT、CORS、文件路径）。
+  - 数据：`users.json`（bcrypt 密码）、`workflows.json`（含 apiKey，仅后端可读）、`conversations.json`（对话统计）。
+  - 前端：登录页 + 应用门户 + 管理后台 + 聊天面板（iframe）。
+- **要点**：管理员可视化新增/编辑/删除工作流；普通用户仅见已启用工作流；`apiKey` 永不返回前端。
+
+## 第 2 期：站内聊天 + RAGFlow 知识库接入（void4 → void5）
+
+- **状态**：✅ 已完成（即本文档主体「产品概述」章节）
+- **目标**：前端改为平台站内自定义聊天面板（替换 Dify iframe），后端 `/api/chat` 在转发 Dify 前先调用 RAGFlow 检索，把文档片段注入 Dify 的 `inputs[contextVar]`。
+- **核心改动**：
+  - 新增 `services/ragflow_service.py`（检索 + 测试连接）、`services/knowledge_store.py`（`ragflow_config.json` 全局配置）。
+  - 新增 `routes/knowledge.py`（GET/PUT 全局配置、POST /test 测试连接）。
+  - `routes/chat.py` 转发前插入 RAGFlow 检索；工作流扩展 `ragflowEnabled/ragflowBaseUrl/ragflowApiKey/ragflowDataset/ragflowTopK/ragflowContextVar` 字段。
+  - 前端聊天面板改为站内消息区 + 输入框，支持 SSE 流式解析。
+- **要点**：RAGFlow 检索失败不阻断聊天（降级为直接调用 Dify）；日志不打印 API Key，配置返回前端时对 Key 掩码。
+
+## 第 3 期：多服务器知识库实体管理
+
+- **状态**：✅ 已完成
+- **目标**：支持一个或多个 RAGFlow 服务器作为独立「知识库实体」，每个实体可有各自不同的地址与 API Key，由添加它的管理员管理。
+- **核心改动**：
+  - 新增 `services/knowledge_bases.py` 与 `data/knowledge_bases.json`。
+  - 新增 `routes/knowledge_bases.py`：列表 / 新增 / 修改 / 删除 / 测试连接 / 拉取数据集 / 拉取文档。
+  - 权限：所有管理员可见全部知识库；仅添加者（owner）可修改/删除；被工作流绑定的知识库禁止删除（删除保护）。
+- **要点**：工作流可跨多个知识库服务器绑定（`ragBindings`，可精确到数据集甚至单个文档）；聊天检索时逐个服务器检索合并上下文。
+
+## 第 4 期：历史会话 + 续聊（DeepSeek 式）
+
+- **状态**：✅ 已完成
+- **目标**：像 DeepSeek 一样点击历史可继续对话。仅 chatflow 续聊；入口为聊天面板内可折叠侧栏；按用户隔离。
+- **核心改动**：
+  - 新增 `services/session_store.py`（线程安全读写 `data/sessions.json`，按 username 隔离）、`routes/sessions.py`（GET/DELETE `/api/sessions`）。
+  - `models/schemas.py`：`ChatRequest` 增加 `session_id`，`ChatResponse` 增加 `session_id`。
+  - `routes/chat.py`：`_resolve_session` 解析/创建会话、落库用户消息 + 回复 + `conversation_id`，流式累积后写回，末尾 `yield event: session` 回传 `session_id`。
+  - 前端：`api.js` 新增 listSessions/getSession/deleteSession + SSE 解析捕获 session 事件；`index.html` 聊天面板新增历史侧栏 `#chat-history`；`chat.js` 实现 loadHistory/renderHistory/openSession/newSession/deleteSessionItem/渲染消息。
+- **要点**：仅 chatflow 支持续聊；历史会话按用户隔离（bob 看不到 alice）；续聊复用 `conversation_id` 接续 Dify 上下文。
+
+## 第 5 期：操作日志筛选（纯前端）
+
+- **状态**：✅ 已完成
+- **目标**：管理员操作日志支持按「操作人 / 动作」筛选。
+- **核心改动**：
+  - `web/index.html`：`#tab-audit` 新增 `.audit-filter` 筛选条（`#audit-filter-user`、`#audit-filter-action` 下拉 + `#audit-filter-reset` 重置）。
+  - `web/js/admin.js`：`loadAudit` 缓存全量 → 动态去重生成选项 → 叠加过滤渲染；新增 `resetAuditFilter()`。
+  - `web/css/style.css`：`.audit-filter` 一行 flex 样式。
+- **要点**：纯前端实现，不请求后端；筛选选项从日志数据动态去重生成。
+
+## 第 6 期：工作流 ID 显示为名称
+
+- **状态**：✅ 已完成
+- **目标**：数据概览「最近对话」表格中的长工作流 UUID 替换为工作流名称。
+- **核心改动**：
+  - `web/js/admin.js` `renderRecentTable`：构建 `wfNameMap`（遍历 `Admin.allWorkflows`），命中显示名称，未命中降级为 `id.substring(0,8)+'…'`。
+- **要点**：`enterAdmin()` 先 `switchTab('workflows')` 填充 `allWorkflows` 再渲染 dashboard，时序正确；仅显示层替换，底层 UUID 不变。
+
+## 第 7 期：操作日志授权工作流显示名称（plan：audit-log-workflow-name）
+
+- **状态**：✅ 已完成
+- **目标**：操作日志详情里的长工作流 UUID（如 `账号「12345」(角色=user)，授权工作流: ['1e3a4c9b-...']`）替换为工作流名称。
+- **范围约定**：仅改今后新写入的日志，不改历史 `audit_log.json`；底层 `allowed_workflow_ids` 真实 UUID 不变，不影响授权。
+- **核心改动**：
+  - `server/routes/accounts.py`：新增辅助函数 `_wf_ids_to_names(ids)`（用 `workflow_store.get_workflow(id)` 查名称，查不到降级 `id[:8]`）；将 `create_account` / `update_account` 两处日志 detail 中的 `result.get('allowed_workflow_ids') or []` 替换为 `_wf_ids_to_names(...)`；新增 `workflow_store` import。
+- **效果示例**：`账号「12345」(角色=user)，授权工作流: ['test']`。
+
+## 附录：如何新增一期计划
+
+- 在本文档末尾追加一个新的 `## 第 N 期：xxx` 章节。
+- 字段建议：状态（✅ 已完成 / 🚧 进行中 / 📋 待规划）、目标、核心改动（后端 / 前端 / 数据）、要点与效果示例。
+- 若某期有独立命名（如 `audit-log-workflow-name`），在标题中注明以便对照。

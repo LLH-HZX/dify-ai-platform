@@ -39,3 +39,5 @@ INFO:     127.0.0.1:51784 - "GET /api/workflows/all HTTP/1.1" 200 OK
 INFO:     127.0.0.1:51784 - "GET /api/knowledge-bases HTTP/1.1" 200 OK
 INFO:     127.0.0.1:51886 - "OPTIONS /api/knowledge-bases/test-connection HTTP/1.1" 200 OK
 INFO:     127.0.0.1:51886 - "POST /api/knowledge-bases/test-connection HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58391 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58392 - "GET / HTTP/1.1" 405 Method Not Allowed

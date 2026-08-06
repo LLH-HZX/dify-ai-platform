@@ -103,6 +103,7 @@ class ChatRequest(BaseModel):
     query: str = Field(..., min_length=1)
     response_mode: str = "blocking"  # blocking | streaming
     conversation_id: str = ""
+    session_id: str = ""             # 前端打开历史会话时传入；空则自动新建会话
     inputs: Optional[dict] = None
     files: Optional[list[FileAttachment]] = None
 
@@ -111,6 +112,7 @@ class ChatResponse(BaseModel):
     answer: str
     reasoning_content: str = ""
     conversation_id: str = ""
+    session_id: str = ""
     metadata: dict = {}
 
 
