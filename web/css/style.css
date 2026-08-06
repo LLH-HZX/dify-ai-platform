@@ -21,21 +21,21 @@
    设计 Token（全局变量 · 改一处全局生效）
    ============================================================ */
 :root {
-  /* 品牌色（降饱和靛蓝 + 点缀紫） */
-  --primary: #4A6CF7;
-  --primary-strong: #3D5AE0;
-  --primary-soft: #EEF1FE;
-  --primary-100: #E4EAFD;
-  --accent: #7C5CFC;
+  /* 品牌色（晨雾蓝紫主调 + 淡紫点缀） */
+  --primary: #5B8DEF;
+  --primary-strong: #4A72D6;
+  --primary-soft: #EEF1FB;
+  --primary-100: #DEE4F8;
+  --accent: #8B7CF6;
 
-  /* 中性色（明亮 · 高级感） */
-  --bg: #F6F7F9;
+  /* 中性色（明亮 · 蓝紫冷调） */
+  --bg: #F8F9FC;
   --surface: #FFFFFF;
-  --border: #E5E8ED;
-  --divider: #EEF1F4;
-  --text-primary: #171A21;
-  --text-secondary: #5A6472;
-  --text-tertiary: #9AA3AF;
+  --border: #E4E7F2;
+  --divider: #EDEFF7;
+  --text-primary: #1A2140;
+  --text-secondary: #4E5878;
+  --text-tertiary: #8A93B0;
 
   /* 语义色 */
   --success: #10B981;
@@ -49,9 +49,9 @@
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
-  --shadow-sm: 0 1px 2px rgba(23, 26, 33, 0.05);
-  --shadow-md: 0 4px 12px rgba(23, 26, 33, 0.06);
-  --shadow-lg: 0 16px 40px rgba(23, 26, 33, 0.1);
+  --shadow-sm: 0 1px 2px rgba(30, 38, 70, 0.05);
+  --shadow-md: 0 4px 12px rgba(30, 38, 70, 0.06);
+  --shadow-lg: 0 16px 40px rgba(30, 38, 70, 0.1);
 
   /* 过渡 */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -70,7 +70,10 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background:
+    radial-gradient(720px 360px at 88% -5%, rgba(91, 141, 239, 0.06), transparent 60%),
+    radial-gradient(640px 320px at 4% 100%, rgba(139, 124, 246, 0.06), transparent 60%),
+    var(--bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -118,9 +121,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #4A6CF7 0%, #7C5CFC 100%);
+  background: linear-gradient(135deg, #5B8DEF 0%, #8B7CF6 100%);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
+  box-shadow: 0 4px 12px rgba(91, 141, 239, 0.3);
 }
 
 .site-logo svg {
@@ -174,16 +177,16 @@ body {
   cursor: pointer;
   transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
     transform var(--dur) var(--ease);
-  box-shadow: 0 2px 8px rgba(74, 108, 247, 0.28);
+  box-shadow: 0 2px 8px rgba(91, 141, 239, 0.28);
 }
 .btn-primary:hover {
   background: var(--primary-strong);
-  box-shadow: 0 6px 16px rgba(74, 108, 247, 0.35);
+  box-shadow: 0 6px 16px rgba(91, 141, 239, 0.35);
   transform: translateY(-1px);
 }
 .btn-primary:active {
   transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(74, 108, 247, 0.25);
+  box-shadow: 0 2px 6px rgba(91, 141, 239, 0.25);
 }
 .btn-primary:disabled {
   opacity: 0.6;
@@ -268,8 +271,8 @@ body {
   justify-content: center;
   padding: 24px;
   background:
-    radial-gradient(600px 300px at 85% 0%, rgba(124, 92, 252, 0.08), transparent 60%),
-    radial-gradient(600px 320px at 10% 100%, rgba(74, 108, 247, 0.1), transparent 60%),
+    radial-gradient(600px 300px at 85% 0%, rgba(139, 124, 246, 0.08), transparent 60%),
+    radial-gradient(600px 320px at 10% 100%, rgba(91, 141, 239, 0.1), transparent 60%),
     var(--bg);
 }
 .auth-card {
@@ -290,9 +293,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #4A6CF7 0%, #7C5CFC 100%);
+  background: linear-gradient(135deg, #5B8DEF 0%, #8B7CF6 100%);
   color: #fff;
-  box-shadow: 0 10px 24px rgba(74, 108, 247, 0.35);
+  box-shadow: 0 10px 24px rgba(91, 141, 239, 0.35);
 }
 .auth-logo svg {
   width: 30px;
@@ -331,7 +334,7 @@ body {
 .field-input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.15);
+  box-shadow: 0 0 0 3px rgba(91, 141, 239, 0.15);
 }
 .field-check {
   flex-direction: row;
@@ -494,7 +497,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(15, 23, 42, 0.35);
+  background: rgba(24, 28, 58, 0.35);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   opacity: 0;
@@ -779,7 +782,7 @@ body {
 .chat-panel__tool--history:hover {
   background: var(--primary-soft);
   color: var(--primary);
-  border-color: rgba(74, 108, 247, 0.3);
+  border-color: rgba(91, 141, 239, 0.3);
 }
 
 .chat-empty-tip {
@@ -816,9 +819,9 @@ body {
   font-weight: 600;
 }
 .chat-msg--user .chat-msg__avatar {
-  background: linear-gradient(135deg, #4A6CF7, #7C5CFC);
+  background: linear-gradient(135deg, #5B8DEF, #8B7CF6);
   color: #fff;
-  box-shadow: 0 3px 8px rgba(74, 108, 247, 0.3);
+  box-shadow: 0 3px 8px rgba(91, 141, 239, 0.3);
 }
 .chat-msg--assistant .chat-msg__avatar {
   background: var(--primary-soft);
@@ -838,11 +841,11 @@ body {
   box-shadow: var(--shadow-sm);
 }
 .chat-msg--user .chat-msg__bubble {
-  background: linear-gradient(135deg, #4A6CF7, #5B7BFA);
+  background: linear-gradient(135deg, #5B8DEF, #7B6CF0);
   color: #fff;
   border: none;
   border-bottom-right-radius: 4px;
-  box-shadow: 0 3px 10px rgba(74, 108, 247, 0.25);
+  box-shadow: 0 3px 10px rgba(91, 141, 239, 0.25);
 }
 .chat-msg--assistant .chat-msg__bubble {
   border-bottom-left-radius: 4px;
@@ -876,7 +879,7 @@ body {
   outline: none;
   border-color: var(--primary);
   background: var(--surface);
-  box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.15);
+  box-shadow: 0 0 0 3px rgba(91, 141, 239, 0.15);
 }
 .chat-panel__input:disabled {
   background: var(--divider);
@@ -999,7 +1002,7 @@ body {
   bottom: 32px;
   left: 50%;
   transform: translateX(-50%) translateY(20px);
-  background: rgba(23, 26, 33, 0.92);
+  background: rgba(30, 38, 70, 0.92);
   color: #fff;
   padding: 12px 24px;
   border-radius: var(--radius-md);
@@ -1280,7 +1283,7 @@ body {
 .kb-dataset-select:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.15);
+  box-shadow: 0 0 0 3px rgba(91, 141, 239, 0.15);
 }
 .kb-files {
   display: flex;
