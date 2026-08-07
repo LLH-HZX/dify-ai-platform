@@ -41,12 +41,7 @@ class WorkflowBase(BaseModel):
     baseUrl: str = ""         # Dify 服务地址
     iframeUrl: str = ""       # 前端聊天 iframe 地址（当前已不再使用，保留兼容）
     enabled: bool = True
-    # --- RAGFlow 检索相关 ---
-    ragEnabled: bool = False        # 该工作流是否启用 RAGFlow 检索
-    ragDatasetIds: list = []        # 兼容旧数据：知识库实体 ID 列表（整库检索）
-    ragBindings: list = []          # 文件级绑定：[{baseId, datasetId, documentIds[]}]
-    ragTopK: int = 3                # 检索返回片段数
-    ragContextVar: str = "context"  # 注入 Dify 的 inputs 变量名
+    inputFields: list = []    # workflow 类型：输入变量定义 [{key,label,type,required}]
 
 
 class WorkflowCreate(WorkflowBase):
@@ -63,11 +58,7 @@ class WorkflowUpdate(BaseModel):
     baseUrl: Optional[str] = None
     iframeUrl: Optional[str] = None
     enabled: Optional[bool] = None
-    ragEnabled: Optional[bool] = None
-    ragDatasetIds: Optional[list] = None
-    ragBindings: Optional[list] = None
-    ragTopK: Optional[int] = None
-    ragContextVar: Optional[str] = None
+    inputFields: Optional[list] = None
 
 
 class WorkflowPublic(BaseModel):
@@ -80,11 +71,7 @@ class WorkflowPublic(BaseModel):
     baseUrl: str
     iframeUrl: str
     enabled: bool
-    ragEnabled: bool = False
-    ragDatasetIds: list = []
-    ragBindings: list = []          # 文件级绑定：[{baseId, datasetId, documentIds[]}]，用于前端回显
-    ragTopK: int = 3
-    ragContextVar: str = "context"
+    inputFields: list = []
     # 不返回 apiKey
 
 
@@ -100,7 +87,8 @@ class FileAttachment(BaseModel):
 
 class ChatRequest(BaseModel):
     workflow_id: str = Field(..., min_length=1)
-    query: str = Field(..., min_length=1)
+    # query 允许为空：chatflow 必须传，workflow 类型由 inputs 驱动、query 可为空
+    query: str = ""
     response_mode: str = "blocking"  # blocking | streaming
     conversation_id: str = ""
     session_id: str = ""             # 前端打开历史会话时传入；空则自动新建会话
@@ -151,22 +139,17 @@ class DashboardStats(BaseModel):
 
 
 # ═══════════════════════════════════════
-#  RAGFlow 知识库配置
+#  类型图标
 # ═══════════════════════════════════════
 
-class RAGFlowConfigPublic(BaseModel):
-    baseUrl: str = ""
-    enabled: bool = False
-    # 不返回 apiKey
+class TypeIconsPublic(BaseModel):
+    chatflow: str = ""
+    workflow: str = ""
+    agent: str = ""
 
 
-class RAGFlowConfigUpdate(BaseModel):
-    baseUrl: Optional[str] = None
-    apiKey: Optional[str] = None
-    enabled: Optional[bool] = None
+class TypeIconUpdate(BaseModel):
+    url: str = ""  # 图标相对路径，如 /uploads/xxx.png；传空串表示清除
 
 
-class RAGFlowConfig(BaseModel):
-    connected: bool = False
-    datasets: list = []
-    message: str = ""
+

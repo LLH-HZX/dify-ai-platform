@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI应用平台</title>
   <meta name="description" content="企业内部 AI 应用门户" />
-  <link rel="stylesheet" href="css/style.css?v=10" />
+  <link rel="stylesheet" href="css/style.css?v=12" />
 </head>
 <body>
 
@@ -73,9 +73,18 @@
 
     <main class="container">
       <section class="apps-section">
-        <h2 class="section-title">AI应用列表</h2>
-        <div id="apps-grid" class="apps-grid">
-          <p class="empty-tip">加载中...</p>
+        <h2 class="section-title">AI 应用门户</h2>
+
+        <!-- 类型选择页（对话流 / 工作流 / 智能体）图标由 js/app.js 动态渲染 -->
+        <div id="apps-type-select" class="type-select"></div>
+
+        <!-- 类型内应用列表 -->
+        <div id="apps-list-wrap" hidden>
+          <div class="apps-list-head">
+            <button id="apps-back-type" class="btn-ghost">← 返回类型选择</button>
+            <span id="apps-type-title" class="apps-type-title"></span>
+          </div>
+          <div id="apps-grid" class="apps-grid"></div>
         </div>
       </section>
     </main>
@@ -114,7 +123,6 @@
     <main class="container">
       <nav class="admin-tabs">
         <button class="admin-tab active" data-tab="workflows">工作流管理</button>
-        <button class="admin-tab" data-tab="knowledge">知识库管理</button>
         <button class="admin-tab" data-tab="accounts">账号管理</button>
         <button class="admin-tab" data-tab="dashboard">数据概览</button>
         <button class="admin-tab" data-tab="audit">操作日志</button>
@@ -146,11 +154,23 @@
             <input type="hidden" id="wf-id" />
             <div class="form-grid">
               <label class="field"><span class="field-label">名称 *</span><input id="wf-name" class="field-input" required /></label>
-              <label class="field"><span class="field-label">图标</span><input id="wf-icon" class="field-input" value="🤖" /></label>
+              <label class="field"><span class="field-label">图标（可选，png/jpeg/gif/webp，≤3MB）</span>
+                <input type="hidden" id="wf-icon" />
+                <div class="wf-icon-pick">
+                  <div class="wf-icon-preview" id="wf-icon-preview"></div>
+                  <div class="wf-icon-actions">
+                    <label class="btn-outline btn-sm wf-icon-upload">
+                      选择图片<input type="file" id="wf-icon-file" accept="image/png,image/jpeg,image/gif,image/webp" hidden />
+                    </label>
+                    <button type="button" id="wf-icon-clear" class="btn-outline btn-sm" hidden>清除</button>
+                  </div>
+                </div>
+              </label>
               <label class="field"><span class="field-label">类型 *</span>
                 <select id="wf-type" class="field-input">
                   <option value="chatflow">chatflow 对话流</option>
                   <option value="workflow">workflow 工作流</option>
+                  <option value="agent">agent 智能体</option>
                 </select>
               </label>
               <label class="field"><span class="field-label">分类</span><input id="wf-category" class="field-input" value="默认" /></label>
@@ -161,60 +181,15 @@
               <label class="field field-full field-check">
                 <input id="wf-enabled" type="checkbox" checked /> 启用（普通用户可见）
               </label>
-              <div class="field field-full">
-                <span class="field-label" style="font-weight:700; color:#5B8DEF;">RAGFlow 知识库检索（可选）</span>
+              <!-- workflow 输入字段配置（仅 workflow 类型显示） -->
+              <div id="wf-inputfields-wrap" class="field field-full" hidden>
+                <span class="field-label">工作流输入字段（字段名 key 必须与 Dify 工作流「开始节点」的变量名一致）</span>
+                <div id="wf-inputfields-list"></div>
+                <button type="button" id="wf-inputfield-add" class="btn-outline btn-sm">＋ 添加输入字段</button>
               </div>
-              <label class="field field-full field-check">
-                <input id="wf-ragenabled" type="checkbox" /> 启用 RAGFlow 检索（聊天前先检索知识库并注入上下文）
-              </label>
-              <div class="field field-full">
-                <span class="field-label">绑定知识库（点开知识库服务器 → 勾选要检索的知识库/数据集，可多选、跨服务器，勾选即整库检索）</span>
-                <div id="wf-ragdatasets-list" class="wf-check-list">
-                  <p class="empty-tip" style="font-size:0.85rem;" id="wf-ragdatasets-loading">加载知识库中...</p>
-                </div>
-              </div>
-              <label class="field"><span class="field-label">检索片段数 TopK</span><input id="wf-ragtopk" class="field-input" type="number" min="1" max="10" value="3" /></label>
-              <label class="field"><span class="field-label">注入 Dify 的变量名</span><input id="wf-ragcontextvar" class="field-input" value="context" /></label>
             </div>
             <div class="form-actions">
               <button type="button" id="wf-form-cancel" class="btn-outline">取消</button>
-              <button type="submit" class="btn-primary">保存</button>
-            </div>
-          </form>
-        </div>
-      </section>
-
-      <!-- 知识库管理 -->
-      <section id="tab-knowledge" class="admin-panel" hidden>
-        <div class="panel-head">
-          <h3>知识库列表</h3>
-          <button id="kb-add-btn" class="btn-primary btn-sm">＋ 添加知识库</button>
-        </div>
-        <p style="color:#4E5878; font-size:0.9rem; margin-bottom:16px;">
-          每个知识库对应一个 RAGFlow 服务器（可各自不同的地址与 API Key），由添加它的管理员管理。所有管理员可见全部知识库；只有添加者可修改/删除。工作流可自由勾选任意知识库。
-        </p>
-        <table class="data-table">
-          <thead><tr><th>名称</th><th>RAGFlow 地址</th><th>归属</th><th>操作</th></tr></thead>
-          <tbody id="kb-table-body"></tbody>
-        </table>
-
-        <!-- 新增/编辑知识库表单 -->
-        <div id="kb-form-wrap" class="form-card" hidden>
-          <h3 id="kb-form-title">添加知识库</h3>
-          <form id="kb-form">
-            <input type="hidden" id="kb-id" />
-            <div class="form-grid">
-              <label class="field field-full"><span class="field-label">知识库名称 *</span><input id="kb-name" class="field-input" placeholder="如：我的知识库A" required /></label>
-              <label class="field field-full"><span class="field-label">RAGFlow 服务地址 baseUrl *</span><input id="kb-baseurl" class="field-input" placeholder="如 http://127.0.0.1:9380" required /></label>
-              <label class="field field-full"><span class="field-label">API Key *（编辑时留空表示不修改）</span><input id="kb-apikey" class="field-input" type="password" placeholder="ragflow-xxx" required /></label>
-              <div class="field field-full">
-                <span class="field-label">测试连接（验证地址与 Key，并查看该服务器下的数据集）</span>
-                <button type="button" id="kb-test-btn" class="btn-primary btn-sm">⚡ 测试连接</button>
-                <span id="kb-test-result" class="kb-test-result"></span>
-              </div>
-            </div>
-            <div class="form-actions">
-              <button type="button" id="kb-form-cancel" class="btn-outline">取消</button>
               <button type="submit" class="btn-primary">保存</button>
             </div>
           </form>
@@ -284,7 +259,7 @@
           <button type="button" id="audit-refresh-btn" class="btn-outline btn-sm">刷新</button>
         </div>
         <p style="color:#4E5878; font-size:0.9rem; margin-bottom:16px;">
-          记录管理员在后台的配置操作（新增/修改/删除工作流、绑定知识库、账号管理、知识库配置等）。
+          记录管理员在后台的配置操作（新增/修改/删除工作流、账号管理等）。
         </p>
         <div class="audit-filter">
           <label class="audit-filter__item">
@@ -378,10 +353,10 @@
 
   <!-- 脚本：auth → api → apps → chat → admin → app -->
   <script src="js/auth.js?v=4"></script>
-  <script src="js/api.js?v=5"></script>
+  <script src="js/api.js?v=6"></script>
   <script src="js/apps.js?v=4"></script>
   <script src="js/chat.js?v=4"></script>
   <script src="js/admin.js?v=6"></script>
-  <script src="js/app.js?v=4"></script>
+  <script src="js/app.js?v=5"></script>
 </body>
 </html>

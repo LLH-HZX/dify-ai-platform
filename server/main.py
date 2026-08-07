@@ -8,8 +8,9 @@ import logging
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
-from config import HOST, PORT, CORS_ORIGINS, INITIAL_ADMIN_USERNAME, INITIAL_ADMIN_PASSWORD
+from config import HOST, PORT, CORS_ORIGINS, INITIAL_ADMIN_USERNAME, INITIAL_ADMIN_PASSWORD, UPLOAD_DIR
 from auth.security import hash_password
 from services import user_store
 
@@ -33,10 +34,9 @@ from routes.workflows import router as workflow_router
 from routes.accounts import router as accounts_router
 from routes.chat import router as chat_router
 from routes.dashboard import router as dashboard_router
-from routes.knowledge import router as knowledge_router
-from routes.knowledge_bases import router as knowledge_bases_router
 from routes.upload import router as upload_router
 from routes.sessions import router as sessions_router
+from routes.types import router as types_router
 
 app = FastAPI(
     title="AI 应用平台 API",
@@ -68,10 +68,12 @@ app.include_router(workflow_router)
 app.include_router(accounts_router)
 app.include_router(chat_router)
 app.include_router(dashboard_router)
-app.include_router(knowledge_router)
-app.include_router(knowledge_bases_router)
 app.include_router(upload_router)
 app.include_router(sessions_router)
+app.include_router(types_router)
+
+# 静态文件服务：允许前端通过 /uploads/xxx.png 访问上传的图片（图标等）
+app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
 
 if __name__ == "__main__":

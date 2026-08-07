@@ -12,9 +12,8 @@ WORKFLOWS_JSON_PATH = DATA_DIR / "workflows.json"
 USERS_JSON_PATH = DATA_DIR / "users.json"
 CONVERSATIONS_JSON_PATH = DATA_DIR / "conversations.json"
 SESSIONS_JSON_PATH = DATA_DIR / "sessions.json"
-RAGFLOW_CONFIG_JSON_PATH = DATA_DIR / "ragflow_config.json"
 AUDIT_LOG_JSON_PATH = DATA_DIR / "audit_log.json"
-KNOWLEDGE_BASES_JSON_PATH = DATA_DIR / "knowledge_bases.json"
+TYPE_ICONS_JSON_PATH = DATA_DIR / "type_icons.json"
 
 # 确保目录存在
 DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -44,11 +43,6 @@ INITIAL_ADMIN_PASSWORD = os.getenv("INITIAL_ADMIN_PASSWORD", "admin123")
 DIFY_TIMEOUT = int(os.getenv("DIFY_TIMEOUT", "120"))
 DIFY_DEFAULT_USER = os.getenv("DIFY_DEFAULT_USER", "web-user")
 
-# ---------- RAGFlow ----------
-RAGFLOW_TIMEOUT = int(os.getenv("RAGFLOW_TIMEOUT", "30"))
-RAGFLOW_CONTEXT_VAR = os.getenv("RAGFLOW_CONTEXT_VAR", "context")
-RAGFLOW_DEFAULT_TOP_K = int(os.getenv("RAGFLOW_DEFAULT_TOP_K", "3"))
-
 # ---------- 上传 ----------
 MAX_UPLOAD_SIZE_MB = int(os.getenv("MAX_UPLOAD_SIZE_MB", "20"))
 ALLOWED_IMAGE_TYPES = {"image/png", "image/jpeg", "image/gif", "image/webp", "image/svg+xml"}
@@ -59,3 +53,7 @@ ALLOWED_FILE_TYPES = {
     "application/json",
 }
 ALLOWED_MIME_TYPES = ALLOWED_IMAGE_TYPES | ALLOWED_FILE_TYPES
+
+# ---------- 工作流图标上传 ----------
+MAX_ICON_SIZE_MB = int(os.getenv("MAX_ICON_SIZE_MB", "3"))
+ALLOWED_ICON_TYPES = {"image/png", "image/jpeg", "image/gif", "image/webp"}

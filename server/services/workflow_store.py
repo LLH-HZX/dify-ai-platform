@@ -65,11 +65,7 @@ def create_workflow(data: dict) -> dict:
         "baseUrl": data.get("baseUrl", ""),
         "iframeUrl": data.get("iframeUrl", ""),
         "enabled": data.get("enabled", True),
-        "ragEnabled": data.get("ragEnabled", False),
-        "ragDatasetIds": data.get("ragDatasetIds") or [],
-        "ragBindings": data.get("ragBindings") or [],
-        "ragTopK": data.get("ragTopK", 3),
-        "ragContextVar": data.get("ragContextVar", "context"),
+        "inputFields": data.get("inputFields") or [],
     }
     with _lock:
         workflows = _read_all()
@@ -87,8 +83,7 @@ def create_workflow(data: dict) -> dict:
 def update_workflow(workflow_id: str, data: dict) -> Optional[dict]:
     allowed_keys = (
         "name", "icon", "description", "type", "category",
-        "apiKey", "baseUrl", "iframeUrl", "enabled",
-        "ragEnabled", "ragDatasetIds", "ragBindings", "ragTopK", "ragContextVar",
+        "apiKey", "baseUrl", "iframeUrl", "enabled", "inputFields",
     )
     # 空字符串视为"不修改"的字段：前端编辑时若不重新填写，则不覆盖原有密钥
     empty_means_keep = ("apiKey",)

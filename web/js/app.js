@@ -22,22 +22,34 @@
   }
 
   // ═══════════════ 渲染应用卡片 ═══════════════
-  function renderApps() {
+  function renderApps(apps) {
     var grid = document.getElementById('apps-grid');
-    var apps = window.Apps.list;
+    apps = apps || window.Apps.list;
 
     if (!apps.length) {
-      grid.innerHTML = '<p class="empty-tip">暂无可用应用</p>';
+      // 区分提示：admin 看全部为空=确实没应用；普通用户为空=未被授权
+      var isAdmin = window.Auth.isAdmin && window.Auth.isAdmin();
+      if (isAdmin) {
+        grid.innerHTML = '<p class="empty-tip">该类型下暂无可用应用</p>';
+      } else {
+        grid.innerHTML = '<div class="empty-tip empty-tip--permission">🔒 暂无权限使用该类型，请联系管理员授权</div>';
+      }
       return;
     }
 
     grid.innerHTML = apps.map(function (app) {
       var color = app.color || '#2563EB';
+      // 有自定义图标图片则用 <img>（转完整 URL），否则显示应用名首字符
+      var iconHtml;
+      if (app.icon) {
+        var iconUrl = (window.API && window.API.resolveUrl) ? window.API.resolveUrl(app.icon) : app.icon;
+        iconHtml = '<img src="' + escAttr(iconUrl) + '" alt="" />';
+      } else {
+        iconHtml = '<span>' + esc((app.name || 'AI').charAt(0)) + '</span>';
+      }
       return (
         '<article class="app-card" data-id="' + escAttr(app.id) + '" tabindex="0" role="button" aria-label="打开 ' + escAttr(app.name || 'AI应用') + '">' +
-          '<div class="app-card__icon" style="background-color:' + color + '1A; color:' + color + ';">' +
-            '<span>' + esc(app.icon || '🤖') + '</span>' +
-          '</div>' +
+          '<div class="app-card__icon" style="background-color:' + color + '1A; color:' + color + ';">' + iconHtml + '</div>' +
           '<div class="app-card__body">' +
             '<h3 class="app-card__title">' + esc(app.name) + '</h3>' +
             '<p class="app-card__desc">' + esc(app.description || '') + '</p>' +
@@ -58,6 +70,125 @@
           window.Chat.open(card.getAttribute('data-id'));
         }
       });
+    });
+  }
+
+  // ═══════════════ 类型选择卡片 ═══════════════
+  // 类型元信息：无图标时显示英文 key（chat/work/agent）
+  var TYPE_META = [
+    { type: 'chatflow', name: '对话流', desc: 'Chatflow · 问答式对话', fallback: 'chat' },
+    { type: 'workflow', name: '工作流', desc: 'Workflow · 任务式运行', fallback: 'work' },
+    { type: 'agent',    name: '智能体', desc: 'Agent · 工具化智能对话', fallback: 'agent' },
+  ];
+  var TYPE_ICONS = {}; // 类型图标缓存 {type: url}
+  var typeIconFileInput = null; // 管理员上传图标用的隐藏 input
+
+  // 渲染类型选择卡片（图标来自后端配置，无图显示英文 key）
+  function renderTypeSelect() {
+    var grid = document.getElementById('apps-type-select');
+    grid.innerHTML = TYPE_META.map(function (m) {
+      var iconUrl = TYPE_ICONS[m.type];
+      var iconHtml;
+      if (iconUrl) {
+        iconHtml = '<img src="' + escAttr(window.API.resolveUrl(iconUrl)) + '" alt="' + escAttr(m.name) + '" />';
+      } else {
+        iconHtml = '<span class="type-select-icon__fallback">' + esc(m.fallback) + '</span>';
+      }
+      return (
+        '<button type="button" class="type-select-card" data-type="' + m.type + '">' +
+          '<div class="type-select-icon">' + iconHtml + '</div>' +
+          '<div class="type-select-name">' + esc(m.name) + '</div>' +
+          '<div class="type-select-desc">' + esc(m.desc) + '</div>' +
+        '</button>'
+      );
+    }).join('');
+
+    // 重新绑定卡片点击
+    grid.querySelectorAll('.type-select-card').forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        // 管理员点击图标区域 → 弹上传，不进入列表
+        if (e.target.closest && e.target.closest('.type-select-icon') && window.Auth.isAdmin()) {
+          e.stopPropagation();
+          triggerTypeIconUpload(card.getAttribute('data-type'));
+          return;
+        }
+        showAppsByType(card.getAttribute('data-type'));
+      });
+    });
+  }
+
+  // 显示类型选择页
+  function showTypeSelect() {
+    document.getElementById('apps-type-select').hidden = false;
+    document.getElementById('apps-list-wrap').hidden = true;
+    loadTypeIcons();
+  }
+
+  // 从后端加载类型图标并渲染
+  function loadTypeIcons() {
+    window.API.getTypeIcons().then(function (icons) {
+      TYPE_ICONS = icons || {};
+      renderTypeSelect();
+    }).catch(function () {
+      // 加载失败保留默认空图标，仍渲染英文 key 占位
+      TYPE_ICONS = {};
+      renderTypeSelect();
+    });
+  }
+
+  // 管理员点击类型图标 → 弹出文件上传并保存
+  function triggerTypeIconUpload(typeName) {
+    if (!window.Auth.isAdmin()) return;
+    if (!typeIconFileInput) {
+      typeIconFileInput = document.createElement('input');
+      typeIconFileInput.type = 'file';
+      typeIconFileInput.accept = 'image/png,image/jpeg,image/gif,image/webp';
+      typeIconFileInput.style.display = 'none';
+      document.body.appendChild(typeIconFileInput);
+      typeIconFileInput.addEventListener('change', function () {
+        var file = typeIconFileInput.files && typeIconFileInput.files[0];
+        typeIconFileInput.value = '';
+        if (!file) return;
+        if (!/^image\/(png|jpeg|gif|webp)$/.test(file.type)) {
+          window.showToast('仅支持 png/jpeg/gif/webp 图片');
+          return;
+        }
+        if (file.size > 3 * 1024 * 1024) {
+          window.showToast('图标不能超过 3MB');
+          return;
+        }
+        window.showToast('正在上传图标...');
+        window.API.uploadIcon(file).then(function (data) {
+          return window.API.saveTypeIcon(typeName, data.url || '');
+        }).then(function () {
+          window.showToast('类型图标已更新');
+          loadTypeIcons();
+        }).catch(function (err) {
+          window.showToast(err.message || '更新失败');
+        });
+      });
+    }
+    typeIconFileInput.click();
+  }
+
+  // 按类型显示应用列表
+  function showAppsByType(type) {
+    var allApps = window.Apps.list || [];
+    var apps = allApps.filter(function (a) { return (a.type || 'chatflow') === type; });
+    var titleEl = document.getElementById('apps-type-title');
+    var titleText = type === 'workflow' ? '工作流' : (type === 'agent' ? '智能体' : '对话流');
+    titleEl.textContent = titleText + '（' + apps.length + '）';
+
+    // 普通用户进入无权限类型时仍显示，但列表为空并提示
+    document.getElementById('apps-type-select').hidden = true;
+    document.getElementById('apps-list-wrap').hidden = false;
+    renderApps(apps);
+  }
+
+  // 绑定类型选择返回按钮（卡片点击事件在 renderTypeSelect 中动态绑定）
+  function bindTypeSelect() {
+    document.getElementById('apps-back-type').addEventListener('click', function () {
+      showTypeSelect();
     });
   }
 
@@ -82,13 +213,12 @@
     adminBtn.hidden = !window.Auth.isAdmin();
     backBtn.hidden = true;
 
-    var grid = document.getElementById('apps-grid');
-    grid.innerHTML = '<p class="empty-tip">加载中...</p>';
     try {
       await window.Apps.load();
-      renderApps();
+      showTypeSelect();
     } catch (e) {
-      grid.innerHTML = '<p class="empty-tip">' + esc(e.message || '加载失败') + '</p>';
+      document.getElementById('apps-grid').innerHTML = '<p class="empty-tip">' + esc(e.message || '加载失败') + '</p>';
+      showTypeSelect();
     }
   }
 
@@ -168,6 +298,7 @@
     window.Chat.init();
     bindLogin();
     bindNav();
+    bindTypeSelect();
 
     var user = window.Auth.loadUser();
     if (window.Auth.isLoggedIn()) {

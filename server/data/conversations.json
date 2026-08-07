@@ -663,5 +663,446 @@
     "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
     "query": "你可以回答我",
     "created_at": "2026-08-06T13:16:50.990617"
+  },
+  {
+    "id": "a27a22a4-39c8-495e-ab6f-5b4d6d6e7156",
+    "username": "001",
+    "workflow_id": "f58e744d-80ef-45cb-bcbf-722c63cdaf03",
+    "query": "我要投诉这个电脑少了鼠标",
+    "created_at": "2026-08-06T15:59:53.053274"
+  },
+  {
+    "id": "6ae5d399-dfae-48dd-9be1-2eccf168c18a",
+    "username": "001",
+    "workflow_id": "2cfe4932-f7b6-4d42-846a-119d5839b7b4",
+    "query": "我要投诉，为什么联想电脑没有充电线",
+    "created_at": "2026-08-06T16:24:39.631005"
+  },
+  {
+    "id": "c6df0228-162f-4c70-87cd-00db4b5312bf",
+    "username": "admin",
+    "workflow_id": "2cfe4932-f7b6-4d42-846a-119d5839b7b4",
+    "query": "你好",
+    "created_at": "2026-08-06T16:29:07.798275"
+  },
+  {
+    "id": "2d518c35-708c-4e18-a9c5-1545658bbc82",
+    "username": "admin",
+    "workflow_id": "2cfe4932-f7b6-4d42-846a-119d5839b7b4",
+    "query": "hi",
+    "created_at": "2026-08-06T16:29:31.167944"
+  },
+  {
+    "id": "daddba69-39d5-457e-895f-9f680a55513b",
+    "username": "admin",
+    "workflow_id": "f58e744d-80ef-45cb-bcbf-722c63cdaf03",
+    "query": "hi",
+    "created_at": "2026-08-06T16:29:55.707444"
+  },
+  {
+    "id": "d9430e05-b300-48cb-9023-924f0cb33691",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "你好",
+    "created_at": "2026-08-06T16:30:04.324928"
+  },
+  {
+    "id": "4126fddb-7e3d-4121-9280-a636e11ad2bb",
+    "username": "001",
+    "workflow_id": "2cfe4932-f7b6-4d42-846a-119d5839b7b4",
+    "query": "我要投诉",
+    "created_at": "2026-08-06T16:31:24.100225"
+  },
+  {
+    "id": "d624188e-80ba-4c83-90b4-140906d99c4d",
+    "username": "admin",
+    "workflow_id": "0abcd926-274d-491f-a450-93471e80b0f5",
+    "query": "hi",
+    "created_at": "2026-08-06T16:33:32.668578"
+  },
+  {
+    "id": "0cf1c940-a6e6-480f-abd0-0cb795aa78d9",
+    "username": "001",
+    "workflow_id": "2cfe4932-f7b6-4d42-846a-119d5839b7b4",
+    "query": "我要投诉",
+    "created_at": "2026-08-06T16:33:44.586082"
+  },
+  {
+    "id": "1aaa703f-8fd9-4f4c-bfd7-27dfd49283ef",
+    "username": "001",
+    "workflow_id": "2cfe4932-f7b6-4d42-846a-119d5839b7b4",
+    "query": "你好",
+    "created_at": "2026-08-06T16:38:04.635277"
+  },
+  {
+    "id": "12ec1850-f096-41aa-bbfe-a4a16313df41",
+    "username": "001",
+    "workflow_id": "2cfe4932-f7b6-4d42-846a-119d5839b7b4",
+    "query": "我要投诉",
+    "created_at": "2026-08-06T16:40:46.637026"
+  },
+  {
+    "id": "4707e567-a899-4be5-bb0e-05075b442385",
+    "username": "admin",
+    "workflow_id": "2cfe4932-f7b6-4d42-846a-119d5839b7b4",
+    "query": "你好",
+    "created_at": "2026-08-06T16:40:50.061276"
+  },
+  {
+    "id": "817df85d-543a-4d07-bbb3-2df32372a959",
+    "username": "001",
+    "workflow_id": "2cfe4932-f7b6-4d42-846a-119d5839b7b4",
+    "query": "你好",
+    "created_at": "2026-08-06T16:42:57.432948"
+  },
+  {
+    "id": "35399104-cf14-4f37-b140-124358a3f7c9",
+    "username": "001",
+    "workflow_id": "2cfe4932-f7b6-4d42-846a-119d5839b7b4",
+    "query": "你好",
+    "created_at": "2026-08-06T16:45:11.920371"
+  },
+  {
+    "id": "de10f9d2-c447-4938-ae2e-85174ef6ccc1",
+    "username": "001",
+    "workflow_id": "2cfe4932-f7b6-4d42-846a-119d5839b7b4",
+    "query": "我要投诉",
+    "created_at": "2026-08-06T16:45:53.877187"
+  },
+  {
+    "id": "44647bc1-6e7b-40b8-9ce4-9ddffb74aff1",
+    "username": "001",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "ERP是什么",
+    "created_at": "2026-08-06T17:12:49.765104"
+  },
+  {
+    "id": "d2b791c2-3682-4dc7-b037-f8faaf0654c3",
+    "username": "002",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-06T17:14:41.532159"
+  },
+  {
+    "id": "60e7639e-4aec-4609-89a1-a61424d95104",
+    "username": "002",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "这是什么问题",
+    "created_at": "2026-08-06T17:16:49.232614"
+  },
+  {
+    "id": "8048d5f9-3d14-4f49-b2dc-e8ec8aac9e4b",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "这是什么",
+    "created_at": "2026-08-07T08:55:47.551056"
+  },
+  {
+    "id": "3ae1f861-406a-45bd-b141-49d2c7e94d92",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-07T08:56:29.748524"
+  },
+  {
+    "id": "4c988cab-0693-4bb0-8b3f-4473a971a132",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-07T08:57:58.079845"
+  },
+  {
+    "id": "f56f0bd4-d882-444f-9545-d8cf32e0b51d",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "这是什么",
+    "created_at": "2026-08-07T08:58:20.387743"
+  },
+  {
+    "id": "17def3de-1225-4280-aa92-334a87692b70",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "这是什么原因",
+    "created_at": "2026-08-07T09:14:22.530843"
+  },
+  {
+    "id": "f1b43840-0798-4f0c-85f6-4fd6d700c2f0",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "这是什么原因",
+    "created_at": "2026-08-07T09:15:45.107577"
+  },
+  {
+    "id": "772ae6cc-720a-471d-8bca-1c6a0da9e7d6",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "这个图片是什么原因",
+    "created_at": "2026-08-07T09:21:07.393399"
+  },
+  {
+    "id": "1ade82cb-d291-4c83-afca-ec5f94ee2895",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "这个图片为什么报错",
+    "created_at": "2026-08-07T09:22:53.878695"
+  },
+  {
+    "id": "6cbb5e87-114c-44cc-8d78-a3bf78c90738",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "这个图片是真么报错",
+    "created_at": "2026-08-07T09:25:02.509906"
+  },
+  {
+    "id": "619c1c2e-c07c-4552-9b34-a555ed5f8486",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "这个图片是什么错误",
+    "created_at": "2026-08-07T09:25:56.922370"
+  },
+  {
+    "id": "3c9e521e-e43a-4026-8b9b-75a03f1b85c8",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "这个文件讲了个什么",
+    "created_at": "2026-08-07T09:27:08.046642"
+  },
+  {
+    "id": "750968f0-3149-4912-bd5f-6a7cc8560c42",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "总结",
+    "created_at": "2026-08-07T09:28:01.850029"
+  },
+  {
+    "id": "95474ef2-7adc-4baf-91ae-cc1665dfa3e3",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "总结",
+    "created_at": "2026-08-07T09:28:15.420131"
+  },
+  {
+    "id": "f49d16d1-4078-4e48-bb18-4520daab9f3f",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "你好",
+    "created_at": "2026-08-07T09:28:36.966264"
+  },
+  {
+    "id": "cac68b6b-c467-4825-86d9-43cdbf79df7a",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "总结文章",
+    "created_at": "2026-08-07T09:30:02.266124"
+  },
+  {
+    "id": "3acb7882-ea2c-459c-8032-0328277b0338",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "总结文章",
+    "created_at": "2026-08-07T09:32:01.283138"
+  },
+  {
+    "id": "8c55abd2-d3bc-4c6f-a7c0-04b7137263d2",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "总结文章",
+    "created_at": "2026-08-07T09:33:35.080086"
+  },
+  {
+    "id": "302db8fb-8b9f-4ef1-9404-d8745269b595",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "总结文章",
+    "created_at": "2026-08-07T09:34:31.094702"
+  },
+  {
+    "id": "11d8d7f6-cedf-4f4a-8ab8-55afe9d7047c",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "总结文章",
+    "created_at": "2026-08-07T09:35:35.778024"
+  },
+  {
+    "id": "c4f0746d-ecbe-47df-987f-c972e529a5e4",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "总结文章",
+    "created_at": "2026-08-07T09:39:11.543312"
+  },
+  {
+    "id": "af0c88af-75a3-4dd8-9a9a-0a9193eaef4a",
+    "username": "admin",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "图片为什么报错",
+    "created_at": "2026-08-07T09:39:34.606029"
+  },
+  {
+    "id": "5bea3c54-ac45-474e-a5e8-555306198f37",
+    "username": "admin",
+    "workflow_id": "41acdfcf-abf3-4dcf-bdec-6b7fadcac503",
+    "query": "",
+    "created_at": "2026-08-07T11:06:26.970395"
+  },
+  {
+    "id": "706b3c52-1000-40d5-a9d8-5132a8597fef",
+    "username": "admin",
+    "workflow_id": "41acdfcf-abf3-4dcf-bdec-6b7fadcac503",
+    "query": "",
+    "created_at": "2026-08-07T11:07:46.575512"
+  },
+  {
+    "id": "762e4e88-c2c0-4203-a2b9-81e402ce8e38",
+    "username": "admin",
+    "workflow_id": "27dd81c9-0e69-4a55-98be-62d3acde3a71",
+    "query": "",
+    "created_at": "2026-08-07T11:10:28.939453"
+  },
+  {
+    "id": "28f92981-0911-4381-9856-6dae2f2a944a",
+    "username": "admin",
+    "workflow_id": "27dd81c9-0e69-4a55-98be-62d3acde3a71",
+    "query": "",
+    "created_at": "2026-08-07T11:13:33.470476"
+  },
+  {
+    "id": "497b7b29-c10b-43e3-ab94-131c2534f5c1",
+    "username": "admin",
+    "workflow_id": "27dd81c9-0e69-4a55-98be-62d3acde3a71",
+    "query": "",
+    "created_at": "2026-08-07T11:15:13.464115"
+  },
+  {
+    "id": "f04d871b-43a0-4a1b-a33a-2d59a0f87aa7",
+    "username": "admin",
+    "workflow_id": "27dd81c9-0e69-4a55-98be-62d3acde3a71",
+    "query": "",
+    "created_at": "2026-08-07T11:17:42.552242"
+  },
+  {
+    "id": "8f888d5f-7686-4b5a-90bf-02382b8a2725",
+    "username": "admin",
+    "workflow_id": "27dd81c9-0e69-4a55-98be-62d3acde3a71",
+    "query": "",
+    "created_at": "2026-08-07T11:20:37.408323"
+  },
+  {
+    "id": "8219930c-7147-4653-a84c-b10109f2554e",
+    "username": "admin",
+    "workflow_id": "27dd81c9-0e69-4a55-98be-62d3acde3a71",
+    "query": "",
+    "created_at": "2026-08-07T11:23:28.566121"
+  },
+  {
+    "id": "1b676ccc-2e76-4762-bdd4-4f59431c1f9f",
+    "username": "admin",
+    "workflow_id": "27dd81c9-0e69-4a55-98be-62d3acde3a71",
+    "query": "",
+    "created_at": "2026-08-07T11:24:31.463536"
+  },
+  {
+    "id": "a4b39a90-cc92-445b-9492-2bda4818ec0b",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "查询联想",
+    "created_at": "2026-08-07T14:22:07.718359"
+  },
+  {
+    "id": "c3d4c3e5-ed19-4598-8614-242eb5aea0b8",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "有没有华硕y123型号",
+    "created_at": "2026-08-07T14:22:47.280213"
+  },
+  {
+    "id": "f8a7cdea-0b14-4875-8dc0-36e4cd0ffc17",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "我要投诉，联想没有鼠标",
+    "created_at": "2026-08-07T14:24:06.932954"
+  },
+  {
+    "id": "9d54541d-c4dd-4e52-ad92-de882c0761de",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "我是aaa\n审核人是随便",
+    "created_at": "2026-08-07T14:24:40.203588"
+  },
+  {
+    "id": "d12f757f-c3a2-43c6-849f-9d727d8d7135",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "我要投诉",
+    "created_at": "2026-08-07T15:21:39.998536"
+  },
+  {
+    "id": "85b22797-00b0-4066-8ea6-09eb30634369",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "电脑硬件是错的",
+    "created_at": "2026-08-07T15:22:06.405208"
+  },
+  {
+    "id": "372e7304-4b22-4c9c-9f67-1aa766d2c613",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "硬件是坏的，联想买的y9000型号",
+    "created_at": "2026-08-07T15:23:35.938155"
+  },
+  {
+    "id": "18746cde-32c6-4126-894f-aa655169a817",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "我要投诉，没有华为400ys的电脑",
+    "created_at": "2026-08-07T15:33:31.324438"
+  },
+  {
+    "id": "82eef0cc-9ed1-425a-a543-620e7e6a2e6d",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "查询过，但还是没有型号，我的预算是11000元，是涉及数据",
+    "created_at": "2026-08-07T15:34:56.492209"
+  },
+  {
+    "id": "8a2a8f0c-9bb5-4df2-baae-50f0456c6691",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "用于游戏",
+    "created_at": "2026-08-07T15:35:32.075280"
+  },
+  {
+    "id": "eca9868e-4d35-429a-b602-c50d5bddc792",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "有可以使用这个电脑吗",
+    "created_at": "2026-08-07T15:38:36.782003"
+  },
+  {
+    "id": "2be5812f-01ee-43d8-8281-11d6db5422db",
+    "username": "001",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "有适合这个项目的电脑吗",
+    "created_at": "2026-08-07T15:40:11.661512"
+  },
+  {
+    "id": "3f4639bd-3cdd-4635-8902-c1e7c0c11153",
+    "username": "001",
+    "workflow_id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
+    "query": "总结",
+    "created_at": "2026-08-07T16:02:52.305266"
+  },
+  {
+    "id": "a1545051-54d1-4568-b8a1-7da9c4d3334b",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "测试",
+    "created_at": "2026-08-07T16:17:18.182153"
+  },
+  {
+    "id": "9d5d244c-6962-4d15-b7a7-aaac365307d4",
+    "username": "admin",
+    "workflow_id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "query": "测试",
+    "created_at": "2026-08-07T16:26:46.787292"
   }
 ]

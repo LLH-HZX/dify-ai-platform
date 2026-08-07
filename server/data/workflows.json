@@ -1,70 +1,83 @@
 [
   {
     "id": "1e3a4c9b-459a-4c8c-8a4c-d605a94bc0bd",
-    "name": "test",
-    "icon": "🎙️",
+    "name": "test文档传输",
+    "icon": "",
     "description": "基于 Dify 的语音输入助手，支持语音问答与电脑操作查询",
     "type": "chatflow",
     "category": "默认",
     "apiKey": "app-ucP8Taq3oeaGQu8fjAVxevsK",
     "baseUrl": "https://192.168.77.33:8443",
     "iframeUrl": "",
-    "enabled": true,
-    "ragEnabled": true,
-    "ragDatasetIds": [],
-    "ragTopK": 3,
-    "ragContextVar": "context",
-    "ragBindings": [
-      {
-        "baseId": "045c832a-087e-4bc6-be3e-80a685174de8",
-        "datasetId": "7feadae88fa911f1bee4dfe8fba56ff6",
-        "documentIds": []
-      },
-      {
-        "baseId": "045c832a-087e-4bc6-be3e-80a685174de8",
-        "datasetId": "54ff2db68bbc11f1a0f9bfdfd939117d",
-        "documentIds": []
-      },
-      {
-        "baseId": "ae07008c-da2a-4a72-b380-f1406c0bbec2",
-        "datasetId": "a46801c281b511f1a23313b0b027c16e",
-        "documentIds": []
-      }
-    ]
+    "enabled": true
   },
   {
     "id": "60113450-afc6-4959-8107-cf021f2eafff",
     "name": "技术助手",
-    "icon": "💻",
+    "icon": "",
     "description": "解答技术开发相关问题，提供解决方案建议",
     "type": "chatflow",
     "category": "默认",
     "apiKey": "",
     "baseUrl": "http://172.20.45.95",
-    "iframeUrl": "http://172.20.45.95/chatbot/riEL4CkBebeJEHDS",
+    "iframeUrl": "",
     "enabled": true
   },
   {
     "id": "0abcd926-274d-491f-a450-93471e80b0f5",
     "name": "助手",
-    "icon": "🤖",
+    "icon": "",
     "description": "",
     "type": "chatflow",
     "category": "默认",
     "apiKey": "app-g7M30TOOS8jpyUhkD2HAi4EV",
     "baseUrl": "http://172.20.40.222:8889",
     "iframeUrl": "",
+    "enabled": true
+  },
+  {
+    "id": "2cfe4932-f7b6-4d42-846a-119d5839b7b4",
+    "name": "售后",
+    "icon": "",
+    "description": "",
+    "type": "chatflow",
+    "category": "默认",
+    "apiKey": "app-eZ4KLlUFShPRUa5aOQeHzUBV",
+    "baseUrl": "http://172.20.45.95",
+    "iframeUrl": "",
+    "enabled": true
+  },
+  {
+    "id": "27dd81c9-0e69-4a55-98be-62d3acde3a71",
+    "name": "test",
+    "icon": "",
+    "description": "",
+    "type": "workflow",
+    "category": "默认",
+    "apiKey": "app-apS04TcNuALCCFjqIDRN0l88",
+    "baseUrl": "http://172.20.45.95",
+    "iframeUrl": "",
     "enabled": true,
-    "ragEnabled": false,
-    "ragDatasetIds": [],
-    "ragTopK": 3,
-    "ragContextVar": "context",
-    "ragBindings": [
+    "inputFields": [
       {
-        "baseId": "ae07008c-da2a-4a72-b380-f1406c0bbec2",
-        "datasetId": "865e05a081b511f1a23313b0b027c16e",
-        "documentIds": []
+        "key": "query",
+        "label": "query",
+        "type": "text",
+        "required": true
       }
     ]
+  },
+  {
+    "id": "7701cbfb-78fd-4bc5-b494-8d8e8148ec3b",
+    "name": "aaa",
+    "icon": "",
+    "description": "",
+    "type": "agent",
+    "category": "默认",
+    "apiKey": "app-7XGtTmu4nD3owbfcYMLy3tfr",
+    "baseUrl": "http://172.20.45.95",
+    "iframeUrl": "",
+    "enabled": true,
+    "inputFields": []
   }
 ]

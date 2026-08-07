@@ -55,13 +55,21 @@
 
       chatPanelName.textContent = app.name || 'AI助手';
       if (emptyName) emptyName.textContent = app.name || 'AI助手';
-      chatPanelIcon.textContent = app.icon || '🤖';
+      setPanelIcon(app);
       var color = app.color || '#2563EB';
       chatPanelIcon.style.backgroundColor = color + '1A';
       chatPanelIcon.style.color = color;
 
       // 清空历史消息（新会话）
       chatMessages.innerHTML = '<div class="chat-empty-tip">👋 你好，我是 <span id="chat-empty-name">' + esc(app.name || 'AI助手') + '</span>，有什么可以帮你？</div>';
+
+      // workflow 类型且配置了输入字段：显示变量卡片，隐藏聊天输入
+      Chat._wfInputs = null;
+      var isWorkflowForm = (app.type === 'workflow') && app.inputFields && app.inputFields.length > 0;
+      setFooterVisible(!isWorkflowForm);
+      if (isWorkflowForm) {
+        Chat._showWorkflowInputCard(app);
+      }
 
       // 展示侧栏并加载当前用户的历史会话
       setHistoryOpen(true);
@@ -72,8 +80,89 @@
       document.body.style.overflow = 'hidden';
 
       setTimeout(function () {
-        chatInput.focus();
+        if (!isWorkflowForm && chatInput) chatInput.focus();
       }, 300);
+    },
+
+    // 显示 workflow 变量填写卡片
+    _showWorkflowInputCard: function (app) {
+      var fields = app.inputFields || [];
+      chatMessages.innerHTML = '';
+      var card = document.createElement('div');
+      card.className = 'wf-run-card';
+      var rowsHtml = fields.map(function (f, i) {
+        var label = esc(f.label || f.key);
+        var ph = '请输入' + label;
+        var val = '';
+        var ctrl;
+        if (f.type === 'number') {
+          ctrl = '<input class="wf-run-input" data-field="' + i + '" type="number" placeholder="' + ph + '" value="' + escAttr(val) + '" />';
+        } else if (f.type === 'file') {
+          ctrl = '<input class="wf-run-input wf-run-file" data-field="' + i + '" type="text" placeholder="文件标识（可选）" />';
+        } else {
+          ctrl = '<textarea class="wf-run-input wf-run-textarea" data-field="' + i + '" rows="2" placeholder="' + ph + '"></textarea>';
+        }
+        return '<div class="wf-run-field">' +
+          '<label class="wf-run-field-label">' + label + (f.required ? ' <em class="wf-run-req">*</em>' : '') + '</label>' +
+          ctrl + '</div>';
+      }).join('');
+
+      card.innerHTML =
+        '<div class="wf-run-head">⚙️ 运行工作流：' + esc(app.name || '') + '</div>' +
+        '<div class="wf-run-body">' + rowsHtml + '</div>' +
+        '<div class="wf-run-actions">' +
+          '<button type="button" class="btn-primary wf-run-go">运行</button>' +
+        '</div>';
+
+      // 运行按钮
+      card.querySelector('.wf-run-go').addEventListener('click', function () {
+        var inputs = {};
+        var valid = true;
+        fields.forEach(function (f, i) {
+          var el = card.querySelector('.wf-run-input[data-field="' + i + '"]');
+          var v = el ? el.value.trim() : '';
+          if (!v && f.required) { valid = false; window.showToast('请填写：' + (f.label || f.key)); }
+          if (f.type === 'number') v = v ? Number(v) : '';
+          inputs[f.key] = v;
+        });
+        if (!valid) return;
+        Chat._wfInputs = inputs;
+        Chat._runWorkflow(app, inputs);
+      });
+
+      chatMessages.appendChild(card);
+    },
+
+    // 运行 workflow：把 inputs 发给 /api/chat（workflow 类型），流式展示结果
+    _runWorkflow: function (app, inputs) {
+      if (Chat.busy) return;
+      var aiMsg = appendMessage('assistant', '');
+      Chat.busy = true;
+      setSendState();
+
+      var payload = {
+        workflow_id: app.id,
+        query: '',
+        response_mode: 'streaming',
+        conversation_id: '',
+        session_id: '',
+        inputs: inputs || {},
+      };
+
+      window.API.chat(payload, function (delta) {
+        appendStream(aiMsg, delta);
+      }, function (_fullAnswer, conversationId, sessionId) {
+        if (conversationId) Chat.conversationId = conversationId;
+        if (sessionId) Chat.currentSessionId = sessionId;
+        Chat.busy = false;
+        setSendState();
+        loadHistory();
+      }, function (errMsg) {
+        var msg = (errMsg && errMsg.message) ? errMsg.message : (typeof errMsg === 'string' ? errMsg : '请求失败');
+        appendStream(aiMsg, '\n\n⚠️ ' + msg);
+        Chat.busy = false;
+        setSendState();
+      });
     },
 
     close: function () {
@@ -87,6 +176,8 @@
         Chat.conversationId = '';
         Chat.currentSessionId = '';
         Chat.busy = false;
+        Chat._wfInputs = null;
+        setFooterVisible(true);
         if (historyList) historyList.innerHTML = '';
       }, 280);
     },
@@ -139,7 +230,8 @@
         setSendState();
         loadHistory();
       }, function (errMsg) {
-        appendStream(aiMsg, '\n\n⚠️ ' + (errMsg || '请求失败'));
+        var msg = (errMsg && errMsg.message) ? errMsg.message : (typeof errMsg === 'string' ? errMsg : '请求失败');
+        appendStream(aiMsg, '\n\n⚠️ ' + msg);
         Chat.busy = false;
         setSendState();
       });
@@ -233,7 +325,7 @@
     if (role === 'user') {
       avatar.textContent = '我';
     } else {
-      avatar.textContent = (Chat.currentWorkflow && Chat.currentWorkflow.icon) || '🤖';
+      setAvatarIcon(avatar);
     }
 
     var bubble = document.createElement('div');
@@ -260,6 +352,12 @@
     if (chatInput) chatInput.disabled = Chat.busy;
   }
 
+  // 控制聊天输入区（footer）显隐：workflow 变量卡片模式下隐藏
+  function setFooterVisible(visible) {
+    var footer = document.querySelector('.chat-panel__footer');
+    if (footer) footer.style.display = visible ? '' : 'none';
+  }
+
   function autoResize() {
     if (!chatInput) return;
     chatInput.style.height = 'auto';
@@ -275,18 +373,33 @@
     if (Chat.busy) { showToast('等待回复完成后可上传'); return; }
     if (pendingFiles.length >= 5) { showToast('最多同时上传 5 个附件'); return; }
 
-    showToast('正在上传「' + (file.name || '文件') + '」...');
-    window.API.upload(file).then(function (data) {
-      var item = {
-        upload_file_id: data.upload_file_id || data.id,
-        name: data.name || file.name,
-        size: data.size || 0,
-        type: data.type || 'document',
-      };
-      pendingFiles.push(item);
+    // 先加入一个"上传中"占位，带进度条
+    var pending = {
+      name: file.name || '文件',
+      size: file.size || 0,
+      type: file.type && file.type.indexOf('image/') === 0 ? 'image' : 'document',
+      uploading: true,
+      progress: 0,
+    };
+    pendingFiles.push(pending);
+    renderAttachments();
+
+    window.API.upload(file, function (percent) {
+      pending.progress = percent;
+      renderAttachments();
+    }).then(function (data) {
+      pending.uploading = false;
+      pending.upload_file_id = data.upload_file_id || data.id;
+      pending.name = data.name || file.name;
+      pending.size = data.size || file.size || 0;
+      pending.type = data.type || pending.type;
       renderAttachments();
       showToast('附件已添加');
     }).catch(function (err) {
+      // 上传失败：移除该占位
+      var idx = pendingFiles.indexOf(pending);
+      if (idx >= 0) pendingFiles.splice(idx, 1);
+      renderAttachments();
       showToast(err.message || '上传失败');
     });
   }
@@ -296,18 +409,32 @@
     chatAttachments.innerHTML = '';
     pendingFiles.forEach(function (item, index) {
       var chip = document.createElement('span');
-      chip.className = 'chat-panel__attachment';
-      var icon = item.type === 'image' ? '🖼️' : '📄';
-      var sizeText = formatSize(item.size);
-      chip.innerHTML = '<span class="chat-panel__attachment-icon">' + icon + '</span>' +
-        '<span class="chat-panel__attachment-name" title="' + esc(item.name) + '">' + esc(item.name) + '</span>' +
-        '<span class="chat-panel__attachment-size">' + sizeText + '</span>' +
-        '<button type="button" class="chat-panel__attachment-remove" data-index="' + index + '" title="移除附件">×</button>';
-      chip.querySelector('.chat-panel__attachment-remove').addEventListener('click', function (e) {
-        e.stopPropagation();
-        pendingFiles.splice(index, 1);
-        renderAttachments();
-      });
+      chip.className = 'chat-panel__attachment' + (item.uploading ? ' chat-panel__attachment--uploading' : '');
+
+      if (item.uploading) {
+        // 上传中：显示进度条
+        var pct = item.progress || 0;
+        chip.innerHTML =
+          '<span class="chat-panel__attachment-icon">⏳</span>' +
+          '<span class="chat-panel__attachment-name" title="' + esc(item.name) + '">' + esc(item.name) + '</span>' +
+          '<span class="chat-panel__attachment-size">' + pct + '%</span>' +
+          '<span class="chat-panel__progress-wrap">' +
+            '<span class="chat-panel__progress-bar" style="width:' + pct + '%"></span>' +
+          '</span>';
+      } else {
+        var icon = item.type === 'image' ? '🖼️' : '📄';
+        var sizeText = formatSize(item.size);
+        chip.innerHTML =
+          '<span class="chat-panel__attachment-icon">' + icon + '</span>' +
+          '<span class="chat-panel__attachment-name" title="' + esc(item.name) + '">' + esc(item.name) + '</span>' +
+          '<span class="chat-panel__attachment-size">' + sizeText + '</span>' +
+          '<button type="button" class="chat-panel__attachment-remove" data-index="' + index + '" title="移除附件">×</button>';
+        chip.querySelector('.chat-panel__attachment-remove').addEventListener('click', function (e) {
+          e.stopPropagation();
+          pendingFiles.splice(index, 1);
+          renderAttachments();
+        });
+      }
       chatAttachments.appendChild(chip);
     });
   }
@@ -438,6 +565,35 @@
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
+  function escAttr(str) { return esc(str); }
+
+  // 设置聊天面板图标：有自定义图片则用 <img>（转完整 URL），否则用应用名首字符
+  function setPanelIcon(app) {
+    if (!chatPanelIcon) return;
+    var icon = app && app.icon;
+    var name = (app && app.name) || 'AI助手';
+    if (icon) {
+      var iconUrl = (window.API && window.API.resolveUrl) ? window.API.resolveUrl(icon) : icon;
+      chatPanelIcon.innerHTML = '<img src="' + escAttr(iconUrl) + '" alt="" />';
+    } else {
+      chatPanelIcon.textContent = name.charAt(0);
+    }
+  }
+
+  // 设置消息头像：有自定义图片则用 <img>，否则用应用名首字符
+  function setAvatarIcon(avatar) {
+    if (!avatar) return;
+    var wf = Chat.currentWorkflow;
+    var icon = wf && wf.icon;
+    var name = (wf && wf.name) || 'AI';
+    if (icon) {
+      var iconUrl = (window.API && window.API.resolveUrl) ? window.API.resolveUrl(icon) : icon;
+      avatar.innerHTML = '<img src="' + escAttr(iconUrl) + '" alt="" />';
+    } else {
+      avatar.textContent = name.charAt(0);
+    }
+  }
+
   // ═══════════════ 历史会话 ═══════════════
   function loadHistory() {
     if (!historyList) return;
@@ -485,7 +641,7 @@
         Chat.currentWorkflow = app;
         chatPanelName.textContent = app.name || 'AI助手';
         if (emptyName) emptyName.textContent = app.name || 'AI助手';
-        chatPanelIcon.textContent = app.icon || '🤖';
+        setPanelIcon(app);
         var color = app.color || '#2563EB';
         chatPanelIcon.style.backgroundColor = color + '1A';
         chatPanelIcon.style.color = color;

@@ -48,28 +48,43 @@ var API_BASE = window.API_BASE || 'http://127.0.0.1:8100';
     del: function (url) { return request('DELETE', url); },
 
     // 文件上传：multipart 方式，返回 {upload_file_id, name, size, type}
-    upload: function (file) {
+    // onProgress: 可选回调 (percent 0-100, event)
+    upload: function (file, onProgress) {
       return new Promise(function (resolve, reject) {
         var fd = new FormData();
         fd.append('file', file);
-        var headers = {};
         var token = getToken();
-        if (token) headers['Authorization'] = 'Bearer ' + token;
 
-        fetch(API_BASE + '/api/upload', {
-          method: 'POST',
-          headers: headers,
-          body: fd,
-        }).then(function (resp) {
-          if (resp.status === 401) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', API_BASE + '/api/upload');
+        if (token) xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+
+        if (typeof onProgress === 'function' && xhr.upload) {
+          xhr.upload.onprogress = function (e) {
+            if (e.lengthComputable) {
+              onProgress(Math.round((e.loaded / e.total) * 100), e);
+            }
+          };
+        }
+
+        xhr.onload = function () {
+          var data = {};
+          try { data = JSON.parse(xhr.responseText || '{}'); } catch (e) { data = {}; }
+          if (xhr.status === 401) {
             if (window.Auth) window.Auth.clearSession();
-            throw new Error('登录已过期，请重新登录');
+            reject(new Error('登录已过期，请重新登录'));
+            return;
           }
-          return resp.json().catch(function () { return {}; }).then(function (data) {
-            if (!resp.ok) throw new Error(data.detail || '上传失败 (' + resp.status + ')');
-            return data;
-          });
-        }).then(resolve).catch(reject);
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(data);
+          } else {
+            reject(new Error(data.detail || '上传失败 (' + xhr.status + ')'));
+          }
+        };
+        xhr.onerror = function () { reject(new Error('网络错误，上传失败')); };
+        xhr.onabort = function () { reject(new Error('上传已取消')); };
+
+        xhr.send(fd);
       });
     },
 
@@ -79,7 +94,40 @@ var API_BASE = window.API_BASE || 'http://127.0.0.1:8100';
     createWorkflow: function (data) { return request('POST', '/api/workflows', data); },
     updateWorkflow: function (id, data) { return request('PUT', '/api/workflows/' + id, data); },
     deleteWorkflow: function (id) { return request('DELETE', '/api/workflows/' + id); },
-    listDatasets: function () { return request('GET', '/api/workflows/datasets'); },
+    // 上传工作流图标（仅管理员，只允许图片，返回 {url}）
+    // 把后端返回的相对路径（如 /uploads/xxx.png）转成完整可访问 URL
+    resolveUrl: function (url) {
+      if (!url) return '';
+      if (/^https?:\/\//i.test(url)) return url;
+      return API_BASE + url;
+    },
+    uploadIcon: function (file) {
+      return new Promise(function (resolve, reject) {
+        var fd = new FormData();
+        fd.append('file', file);
+        var token = getToken();
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', API_BASE + '/api/upload/icon');
+        if (token) xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        xhr.onload = function () {
+          var data = {};
+          try { data = JSON.parse(xhr.responseText || '{}'); } catch (e) { data = {}; }
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(data);
+          } else {
+            reject(new Error(data.detail || '上传失败 (' + xhr.status + ')'));
+          }
+        };
+        xhr.onerror = function () { reject(new Error('网络错误，上传失败')); };
+        xhr.send(fd);
+      });
+    },
+
+    // 类型图标（门户类型选择页）
+    getTypeIcons: function () { return request('GET', '/api/types/icons'); },
+    saveTypeIcon: function (typeName, url) {
+      return request('PUT', '/api/types/icons/' + encodeURIComponent(typeName), { url: url });
+    },
 
     // 账号
     listAccounts: function () { return request('GET', '/api/accounts'); },
@@ -92,29 +140,29 @@ var API_BASE = window.API_BASE || 'http://127.0.0.1:8100';
     getRecent: function () { return request('GET', '/api/dashboard/recent?limit=50'); },
     getAuditLogs: function () { return request('GET', '/api/dashboard/audit?limit=100'); },
 
-    // 知识库（RAGFlow 全局配置，兼容旧接口）
-    getKnowledgeConfig: function () { return request('GET', '/api/knowledge/config'); },
-    saveKnowledgeConfig: function (data) { return request('PUT', '/api/knowledge/config', data); },
-    testKnowledge: function (data) { return request('POST', '/api/knowledge/test', data); },
-    deleteDataset: function (dataset_id) { return request('DELETE', '/api/knowledge/datasets/' + encodeURIComponent(dataset_id)); },
-
     // 会话历史（历史记录 + 续聊）
     listSessions: function () { return request('GET', '/api/sessions'); },
     getSession: function (id) { return request('GET', '/api/sessions/' + encodeURIComponent(id)); },
     deleteSession: function (id) { return request('DELETE', '/api/sessions/' + encodeURIComponent(id)); },
-
-    // 知识库实体（多 RAGFlow 服务器，每条自带 url/key，有归属）
-    listKnowledgeBases: function () { return request('GET', '/api/knowledge-bases'); },
-    createKnowledgeBase: function (data) { return request('POST', '/api/knowledge-bases', data); },
-    updateKnowledgeBase: function (id, data) { return request('PUT', '/api/knowledge-bases/' + id, data); },
-    deleteKnowledgeBase: function (id) { return request('DELETE', '/api/knowledge-bases/' + id); },
-    // 知识库测试连接与文件级绑定所需
-    testKnowledgeBase: function (data) { return request('POST', '/api/knowledge-bases/test-connection', data); },
-    listBaseDatasets: function (id) { return request('GET', '/api/knowledge-bases/' + id + '/datasets'); },
-    listBaseDocuments: function (id, datasetId) {
-      return request('GET', '/api/knowledge-bases/' + id + '/datasets/' + encodeURIComponent(datasetId) + '/documents');
-    },
   };
+
+  // 把 workflow 的 outputs（对象）转成可展示的文本
+  function workflowOutputsToText(outputs) {
+    if (!outputs || typeof outputs !== 'object') return '';
+    var parts = [];
+    Object.keys(outputs).forEach(function (k) {
+      var v = outputs[k];
+      if (typeof v === 'string' && v.trim()) {
+        parts.push(v);
+      } else if (v && typeof v === 'object') {
+        try { parts.push(JSON.stringify(v)); } catch (e) { /* ignore */ }
+      }
+    });
+    var text = parts.join('\n\n');
+    // 去掉 <think>...</think> 思考块，只保留给用户看的回答
+    text = text.replace(/<think>[\s\S]*?<\/think>/g, '').trim();
+    return text;
+  }
 
   /**
    * 流式聊天：通过 fetch + ReadableStream 读取 SSE
@@ -167,6 +215,14 @@ var API_BASE = window.API_BASE || 'http://127.0.0.1:8100';
           if (obj.answer) {
             currentAnswer += obj.answer;
             onChunk && onChunk(obj.answer);
+          }
+          // workflow 类型：结果在 workflow_finished 的 data.outputs 里（无 answer 字段）
+          if (obj.event === 'workflow_finished' && obj.data && obj.data.outputs) {
+            var wfText = workflowOutputsToText(obj.data.outputs);
+            if (wfText) {
+              currentAnswer += wfText;
+              onChunk && onChunk(wfText);
+            }
           }
           if (obj.conversation_id) currentConversationId = obj.conversation_id;
         } catch (e) { /* 忽略无法解析的行 */ }

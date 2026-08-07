@@ -222,6 +222,70 @@ d:/code2/void4/web/
   - `server/routes/accounts.py`：新增辅助函数 `_wf_ids_to_names(ids)`（用 `workflow_store.get_workflow(id)` 查名称，查不到降级 `id[:8]`）；将 `create_account` / `update_account` 两处日志 detail 中的 `result.get('allowed_workflow_ids') or []` 替换为 `_wf_ids_to_names(...)`；新增 `workflow_store` import。
 - **效果示例**：`账号「12345」(角色=user)，授权工作流: ['test']`。
 
+## 第 8 期：移除 RAGFlow / 知识库功能（保留 Dify + 上传）
+
+- **状态**：✅ 已完成
+- **目标**：彻底删除 RAGFlow 检索与知识库管理相关功能，平台仅保留「Dify 对话对接 + 文件上传」。
+- **核心改动**：
+  - 后端删除：`services/ragflow_service.py`、`services/knowledge_store.py`、`services/knowledge_bases.py`、`routes/knowledge.py`、`routes/knowledge_bases.py`。
+  - 后端清理：`chat.py` 移除 RAG 检索注入（`_retrieve_from_base` / `_enrich_with_ragflow` / `_enrich_legacy`），直接透传 `inputs`；`workflows.py` 移除 `/datasets` 接口与知识库隐藏/绑定逻辑；`config.py` 移除 RAGFlow 配置与路径；`main.py` 移除 knowledge 路由注册；`schemas.py` 移除工作流 RAG 字段与 RAGFlow 配置模型；`workflow_store.py` 移除 RAG 字段。
+  - 前端删除：`api.js` 知识库接口；`admin.js` 知识库管理逻辑；`index.html` 知识库标签页与工作流表单 RAG 区；`style.css` 知识库相关样式。
+  - 数据：删除 `ragflow_config.json`、`knowledge_bases.json`；`workflows.json` 移除各工作流 `rag*` 字段。
+- **要点**：上传功能（`/api/upload`）与 Dify 对话转发完全保留、不受影响。
+
+## 第 9 期：修复文件上传到 Dify（上传代理）
+
+- **状态**：✅ 已完成
+- **目标**：修复"上传附件后 Dify 端 `sys.files` 为空"的问题——平台只把文件存本地、透传平台 ID 给 Dify，导致 Dify 认不出文件。
+- **核心改动**：
+  - `server/services/dify_service.py`：实现真正的**文件上传代理**——新增 `_resolve_local_file()`（按 `upload_file_id` 在 `uploads/` 找真实文件）、`_upload_file_to_dify()`（调 Dify `POST /v1/files/upload` 上传）、`_upload_files()`（批量上传并替换为 Dify 真实 id）；`call_dify_blocking` / `call_dify_streaming` 发消息前先上传文件；文件上传成功状态码接受 `200/201`。
+  - 前端 `web/js/api.js`：上传改用 `XMLHttpRequest`，支持 `onProgress` 进度回调；`web/js/chat.js` 附件区增加**上传进度条**；`style.css` 进度条样式。
+- **要点**：文件按"当前工作流的 baseUrl/apiKey"上传到对应的 Dify，多 Dify 应用互不干扰。
+
+## 第 10 期：workflow 变量卡片 + 前端类型选择 + 类型化改造
+
+- **状态**：✅ 已完成
+- **目标**：让 workflow（工作流）类型应用能正确接收输入变量；应用门户按类型选择；修复 workflow 无回复。
+- **核心改动**：
+  - 后端：`schemas.py` Workflow 增加 `inputFields` 字段；`workflow_store.py` 支持存取；`dify_service.py` 的 `_build_workflow_body` **不再强制注入 query**，只用前端传入的 inputs；`ChatRequest.query` 允许为空。
+  - 前端 `web/js/chat.js`：打开 workflow 且配置 `inputFields` 时显示**变量填写卡片**（隐藏聊天输入框），填完点「运行」把字段值作为 inputs 提交。
+  - 前端 `web/js/api.js`：修复 workflow 无回复——新增 `workflowOutputsToText()` 解析 `workflow_finished` 事件的 `data.outputs`（过滤 `<think>` 思考块），`handleDataLine` 增加对 `workflow_finished` 的处理。
+  - 前端类型选择：`index.html` + `app.js` 新增**类型选择页**（进入门户先选「对话流 / 工作流」），列表页有「返回类型选择」；普通用户无权限类型显示明确提示。
+  - 账号权限：`admin.js` 的 `renderWorkflowCheckboxes` 按**类型分组**显示工作流复选框，去掉 emoji 图标只留文字。
+- **要点**：workflow 输入字段 key 必须与 Dify 工作流「开始节点」的变量名一致。
+
+## 第 11 期：Agent（智能体）模块
+
+- **状态**：✅ 已完成
+- **目标**：平台新增对 Dify Agent（智能体）类型应用的支持，与 chatflow、workflow 并列。
+- **核心改动**：
+  - 后端 `server/services/dify_service.py`：`is_chatflow` 判断由 `type == "chatflow"` 改为 `type in ("chatflow", "agent")`，Agent 走 `/v1/chat-messages`（对话式接口）。
+  - 前端：门户类型选择页新增第三个卡片 **🤖 智能体**；工作流管理 `type` 下拉新增「agent 智能体」；账号权限分组新增「智能体」（空分组自动隐藏）。
+  - 对话交互：Agent 复用 chatflow 的对话式交互，`api.js` 只提取 `answer`（**最终回答**），不展示思考过程（`agent_thought` 忽略）。
+- **要点**：Agent 的 Skill/工具调用由 Dify 后台完成，平台只需配置 baseUrl + apiKey 即可对话使用。
+
+## 第 12 期：类型图标后端配置 + 管理员可设置（plan：type-icon-config）
+
+- **状态**：✅ 已完成
+- **目标**：类型选择页（对话流 / 工作流 / 智能体）的图标从硬编码 emoji 改为后端可配置。类型图标存后端配置文件，仅管理员可设置；无图标时显示类型英文 key 占位；管理员在门户类型选择页点击图标即可弹出上传。
+- **核心改动**：
+  - 后端：
+    - `server/config.py` 新增 `TYPE_ICONS_JSON_PATH = DATA_DIR / "type_icons.json"`。
+    - `server/services/type_icon_store.py`（新增）：线程安全读写 `type_icons.json`（`threading.Lock` + 读全/写全），记录 `{chatflow, workflow, agent}` 三种类型的图标 URL；提供 `get_type_icons()` / `get_type_icon(type_name)` / `set_type_icon(type_name, url)`，白名单校验 `TYPE_KEYS`。
+    - `server/models/schemas.py` 新增 `TypeIconUpdate`（`url`）与 `TypeIconsPublic`（三个类型 url 默认空串）。
+    - `server/routes/types.py`（新增）：`GET /api/types/icons`（`get_current_user` 登录可用）、`PUT /api/types/icons/{type_name}`（`require_admin` 仅管理员），写时记录审计日志「设置类型图标」。
+    - `server/main.py` include 注册 `types_router`。
+  - 前端：
+    - `web/js/api.js` 新增 `getTypeIcons()` / `saveTypeIcon(typeName, url)`，复用 `uploadIcon` + `resolveUrl`。
+    - `web/index.html` 类型选择卡片改为动态容器 `<div id="apps-type-select" class="type-select"></div>`，由 `app.js` 渲染；脚本版本号 `api.js?v=6` / `app.js?v=5` / `style.css?v=11`。
+    - `web/js/app.js`：新增 `TYPE_META`（含 `fallback` 英文 key：chatflow→`chat`、workflow→`work`、agent→`agent`），新增 `renderTypeSelect()`（有图 `<img>`、无图 `.type-select-icon__fallback` span）、`loadTypeIcons()`（异步拉取后渲染）、`triggerTypeIconUpload(typeName)`（仅管理员；动态创建隐藏 file input 复用，复用现有 png/jpeg/gif/webp 校验与 3MB 限制；上传→`saveTypeIcon`→重新渲染）；卡片点击通过 `closest('.type-select-icon')` 区分图标区与卡片其他区（图标区管理员触发上传 + `stopPropagation`，其他区域进入应用列表）。
+    - `web/css/style.css`：`.type-select-icon` 加 `overflow:hidden`，新增 `.type-select-icon img`（`object-fit:cover` 填满）与 `.type-select-icon__fallback`（主色蓝、0.9rem、字重 700）样式。
+- **要点**：
+  - **降级字符**：无图时显示 `TYPE_META.fallback`（chat / work / agent），与用户需求一致。
+  - **交互冲突**：卡片整体点击进入类型列表；图标区点击管理员触发上传，`stopPropagation` 阻止冒泡；非管理员点击图标区无上传行为（直接进入列表）。
+  - **复用零侵入**：图标上传继续走现有 `POST /api/upload/icon`（管理员校验已在后端），不引入新上传接口。
+  - **审计日志**：管理员保存类型图标时记录「设置类型图标 · 类型「对话流」图标 已更新/已清除」。
+
 ## 附录：如何新增一期计划
 
 - 在本文档末尾追加一个新的 `## 第 N 期：xxx` 章节。
